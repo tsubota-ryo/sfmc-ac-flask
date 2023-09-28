@@ -1,0 +1,7 @@
+[2023-09-28 17:38:56 +0900] [93281] [INFO] Starting gunicorn 19.9.0
+[2023-09-28 17:38:56 +0900] [93281] [INFO] Listening at: http://0.0.0.0:8000 (93281)
+[2023-09-28 17:38:56 +0900] [93281] [INFO] Using worker: sync
+[2023-09-28 17:38:56 +0900] [93314] [INFO] Booting worker with pid: 93314
+[2023-09-28 17:40:55 +0900] [93281] [INFO] Handling signal: int
+[2023-09-28 17:40:55 +0900] [93314] [INFO] Worker exiting (pid: 93314)
+[2023-09-28 17:40:55 +0900] [93281] [INFO] Shutting down: Master
