@@ -7,7 +7,7 @@
 	"type": "myActivityType",
 	"lang": {
 		"en-US": {
-			"name": "DialogOne custome connect",
+			"name": "flask_test",
 			"description": ""
 		}
 	},
