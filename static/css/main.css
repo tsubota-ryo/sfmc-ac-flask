@@ -1,0 +1,14 @@
+.container {
+    width:100%;
+    max-width: 960px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.btn_group{
+    margin-top: 30px;
+}
+
+.topmargin{
+    margin-top: 30px;
+}
