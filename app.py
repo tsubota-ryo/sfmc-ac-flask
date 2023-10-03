@@ -20,14 +20,14 @@ def config():
 def execute():
     print("execute")
     print(request.json)
-    app.logger.info('%s logged in successfully', user.username)
+    print(request.body)
+    
     return jsonify({'message': 'hello internal'}), 200
 
 @app.route("/publish",methods=["post"])
 def publish():
     print("publish")
-    response = make_response('Success', 200)
-    return response
+    return make_response('Success', 200)
 
 @app.route("/save",methods=["post"])
 def save():
