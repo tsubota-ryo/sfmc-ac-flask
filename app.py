@@ -25,6 +25,7 @@ def execute():
 @app.route("/publish",methods=["post"])
 def save():
     print("publish")
+    return render_template("index.html")
 
 
 
