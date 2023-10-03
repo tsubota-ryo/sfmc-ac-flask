@@ -95,8 +95,7 @@ function onDoneButtonClick() {
     activity.arguments.execute.inArguments = [{
         creative: selected_creative.value,
         contact_key: "{{Contact.Key}}",
-        uid: "{{Contact.UID}}",
-        test: "{{D1_test_}}"
+        uid: "{{Contact.Attribute}}"
     }];
 
     // you can set the name that appears below the activity with the name property
