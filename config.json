@@ -15,9 +15,6 @@
 		"execute": {
 			"inArguments": [
 				{
-					"myInArgument": "inArgument coming from iframe"
-				},
-				{
 					"param": "{{D1_test_}}"
 				},
 				{
