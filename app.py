@@ -5,8 +5,8 @@ import logging
 app = Flask(__name__)
 
 # ルートURL ("/") へのアクセス時の処理
-@app.route('/')
-def hello_world():
+@app.route('/index.html')
+def root():
     return render_template("index.html")
 
 @app.route('/config.json')
