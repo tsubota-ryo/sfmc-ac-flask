@@ -23,10 +23,14 @@ def execute():
     return request.get_json()
 
 @app.route("/publish",methods=["post"])
-def save():
+def publish():
     print("publish")
     return render_template("index.html")
 
+@app.route("/save",methods=["post"])
+def publish():
+    print("save")
+    return render_template("index.html")
 
 
 # アプリケーションを実行
