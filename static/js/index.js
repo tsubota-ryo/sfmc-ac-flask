@@ -31,7 +31,8 @@ document.addEventListener('DOMContentLoaded', function main() {
     // setupExampleTestHarness();
 
     // setup our ui event handlers
-    // setupEventHandlers();
+   
+    setupEventHandlers();
 
     // Bind the initActivity event...
     // Journey Builder will respond with "initActivity" after it receives the "ready" signal
@@ -144,11 +145,18 @@ function selectDiscountCodeOption(value) {
 
 function setupEventHandlers() {
     // Listen to events on the form
+    document.getElementById('inu').addEventListener('click', inuClick);
+    document.getElementById('neko').addEventListener('click', nekoClick);
     document.getElementById('done').addEventListener('click', onDoneButtonClick);
     document.getElementById('cancel').addEventListener('click', onCancelButtonClick);
     document.getElementById('discount-code').addEventListener('change', onDiscountCodeSelectChange);
 }
-
+function inuClick(){
+    document.getElementById("selected_creative").innerHTML = "犬を選択"
+}
+function nekoClick(){
+    document.getElementById("selected_creative").innerHTML = "猫を選択"
+}
 // this function is for example purposes only. it sets ups a Postmonger
 // session that emulates how Journey Builder works. You can call jb.ready()
 // from the console to kick off the initActivity event with a mock activity object
