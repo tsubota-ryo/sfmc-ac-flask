@@ -19,7 +19,7 @@ def config():
 @app.route("/execute",methods=["GET", "POST"])
 def execute():
     print("execute")
-    print(request.body)
+    print(request.json)
     app.logger.info('%s logged in successfully', user.username)
     return jsonify({'message': 'hello internal'}), 200
 
