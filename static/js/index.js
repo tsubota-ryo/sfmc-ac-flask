@@ -1,4 +1,4 @@
-import Postmonger from 'postmonger';
+import Postmonger from './postmonger';
 
 // JOURNEY BUILDER CUSTOM ACTIVITY - discountCode ACTIVITY
 // ````````````````````````````````````````````````````````````
