@@ -94,7 +94,9 @@ function onDoneButtonClick() {
 
     activity.arguments.execute.inArguments = [{
         creative: selected_creative.value,
-        contact_key: "{{Contact.Key}}"
+        contact_key: "{{Contact.Key}}",
+        uid: "{{Contact.UID}}",
+        test: "{{D1_test_}}"
     }];
 
     // you can set the name that appears below the activity with the name property
@@ -117,31 +119,7 @@ function onCancelButtonClick() {
     connection.trigger('requestInspectorClose');
 }
 
-// function onDiscountCodeSelectChange() {
-//     // enable or disable the done button when the select option changes
-//     const select = document.getElementById('discount-code');
 
-//     if (select.selectedIndex) {
-//         document.getElementById('done').removeAttribute('disabled');
-//     } else {
-//         document.getElementById('done').setAttribute('disabled', '');
-//     }
-
-//     // let journey builder know the activity has changes
-//     connection.trigger('setActivityDirtyState', true);
-// }
-
-// function selectDiscountCodeOption(value) {
-//     const select = document.getElementById('discount-code');
-//     const selectOption = select.querySelector(`[value='${value}']`);
-
-//     if (selectOption) {
-//         selectOption.selected = true;
-//         onDiscountCodeSelectChange();
-//     } else {
-//         console.log('Could not select value from list', `[value='${value}]'`);
-//     }
-// }
 
 function setupEventHandlers() {
     // Listen to events on the form
@@ -161,60 +139,3 @@ function nekoClick(){
     selected_creative.innerHTML = "猫を選択"
     selected_creative.value="cat"
 }
-// this function is for example purposes only. it sets ups a Postmonger
-// session that emulates how Journey Builder works. You can call jb.ready()
-// from the console to kick off the initActivity event with a mock activity object
-// function setupExampleTestHarness() {
-
-//     const isLocalhost = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
-//     if (!isLocalhost) {
-//         // don't load the test harness functions when running in Journey Builder
-//         return;
-//     }
-
-//     const jbSession = new Postmonger.Session();
-//     const jb = {};
-//     window.jb = jb;
-
-//     jbSession.on('setActivityDirtyState', function (value) {
-//         console.log('[echo] setActivityDirtyState -> ', value);
-//     });
-
-//     jbSession.on('requestInspectorClose', function () {
-//         console.log('[echo] requestInspectorClose');
-//     });
-
-//     jbSession.on('updateActivity', function (activity) {
-//         console.log('[echo] updateActivity -> ', JSON.stringify(activity, null, 4));
-//     });
-
-//     jbSession.on('ready', function () {
-//         console.log('[echo] ready');
-//         console.log('\tuse jb.ready() from the console to initialize your activity')
-//     });
-
-//     // fire the ready signal with an example activity
-//     jb.ready = function () {
-//         jbSession.trigger('initActivity', {
-//             name: '',
-//             key: 'EXAMPLE-1',
-//             metaData: {},
-//             configurationArguments: {},
-//             arguments: {
-//                 executionMode: "{{Context.ExecutionMode}}",
-//                 definitionId: "{{Context.DefinitionId}}",
-//                 activityId: "{{Activity.Id}}",
-//                 contactKey: "{{Context.ContactKey}}",
-//                 execute: {
-//                     inArguments: [{
-//                         discount: 10
-//                     }],
-//                     outArguments: []
-//                 },
-//                 startActivityKey: "{{Context.StartActivityKey}}",
-//                 definitionInstanceId: "{{Context.DefinitionInstanceId}}",
-//                 requestObjectId: "{{Context.RequestObjectId}}"
-//             }
-//         });
-//     };
-// }
