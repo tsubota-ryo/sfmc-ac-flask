@@ -1,5 +1,3 @@
-import Postmonger from '/static/js/postmonger';
-
 // JOURNEY BUILDER CUSTOM ACTIVITY - discountCode ACTIVITY
 // ````````````````````````````````````````````````````````````
 // This example demonstrates a custom activity that utilizes an external service to generate
