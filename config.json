@@ -7,7 +7,7 @@
 	"type": "REST",
 	"lang": {
 		"en-US": {
-			"name": "flask_test",
+			"name": "smc_actest",
 			"description": "d1connect"
 		}
 	},
@@ -48,22 +48,6 @@
 			"height": 200,
 			"width": 300,
 			"fullscreen": true
-		}
-	},
-	"schema": {
-		"arguments": {
-			"execute": {
-				"inArguments": [
-					{
-						"myInArgument": {
-							"dataType": "<some data type>",
-							"isNullable": false,
-							"direction": "in"
-						}
-					}
-				],
-				"outArguments": []
-			}
 		}
 	}
 }
