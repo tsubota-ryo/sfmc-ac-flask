@@ -19,7 +19,8 @@ def config():
 @app.route("/execute",methods=["GET", "POST"])
 def execute():
     print("execute")
-    print(request.method)
+    print(request.body)
+    app.logger.info('%s logged in successfully', user.username)
     return jsonify({'message': 'hello internal'}), 200
 
 @app.route("/publish",methods=["post"])

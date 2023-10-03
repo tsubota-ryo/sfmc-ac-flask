@@ -70,14 +70,14 @@ function onInitActivity(payload) {
     // check if this activity has an incoming argument.
     // this would be set on the server side when the activity executes
     // (take a look at execute() in ./discountCode/app.js to see where that happens)
-    const discountArgument = inArguments.find((arg) => arg.discount);
+    // const discountArgument = inArguments.find((arg) => arg.discount);
 
-    console.log('Discount Argument', discountArgument);
+    // console.log('Discount Argument', discountArgument);
 
     // if a discountCode back argument was set, show the message in the view.
-    if (discountArgument) {
-        selectDiscountCodeOption(discountArgument.discount);
-    }
+    // if (discountArgument) {
+    //     selectDiscountCodeOption(discountArgument.discount);
+    // }
 
     // if the discountCode back argument doesn't exist the user can pick
     // a discountCode message from the drop down list. the discountCode back arg
