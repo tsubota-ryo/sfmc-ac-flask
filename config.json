@@ -18,10 +18,17 @@
 					"myInArgument": "inArgument coming from iframe"
 				},
 				{
-					"FirstName": "{{Contact.Attribute.Persona.FirstName}}"
+					"param": "{{D1_test_}}"
+				},
+				{
+					"contact": "{{Contact}}"
 				}
 			],
-			"outArguments": [],
+			"outArguments": [{
+				"param": "{{D1_test_}}"
+			},{
+				"contact": "{{Contact}}"
+			}],
 			"timeout": 100000,
 			"retryCount": 1,
 			"retryDelay": 10000,
