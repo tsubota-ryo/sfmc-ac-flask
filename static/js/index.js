@@ -9,7 +9,7 @@
 
 // Custom activities load inside an iframe. We'll use postmonger to manage
 // the cross-document messaging between Journey Builder and the activity
-import Postmonger from './postmonger';
+import Postmonger from '/static/js/postmonger';
 
 
 // Create a new connection for this session.
