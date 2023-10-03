@@ -25,13 +25,18 @@ def execute():
 @app.route("/publish",methods=["post"])
 def publish():
     print("publish")
-    return render_template("index.html")
+    response = make_response('Success', 200)
+    return response
 
 @app.route("/save",methods=["post"])
 def save():
     print("save")
     return render_template("index.html")
 
+@app.route("/validate",methods=["post"])
+def save():
+    print("validate")
+    return make_response('Success', 200)
 
 # アプリケーションを実行
 if __name__ == '__main__':
