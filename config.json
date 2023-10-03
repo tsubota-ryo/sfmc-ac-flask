@@ -13,21 +13,23 @@
 	},
 	"arguments": {
 		"execute": {
-			"inArguments": [{
-				"myInArgument": "inArgument coming from iframe"
-			},{
-                "test": "test"
-              },
-              {
-                "phoneNumber": "{{Contact.Default.PhoneNumber}}"
-              }
-        ],
+			"inArguments": [
+				{
+					"myInArgument": "inArgument coming from iframe"
+				},
+				{
+					"test": "test"
+				},
+				{
+					"phoneNumber": "{{Contact.Default.PhoneNumber}}"
+				}
+			],
 			"outArguments": [],
 			"timeout": 100000,
 			"retryCount": 1,
 			"retryDelay": 10000,
-			"concurrentRequests" : 5,
-			"url": "https://some-endpoint.com/execute"
+			"concurrentRequests": 5,
+			"url": "https://sfmc-ac-flask.onrender.com/execute"
 		}
 	},
 	"configurationArguments": {
@@ -44,24 +46,6 @@
 			"url": "URI/for/your/activity/stop"
 		}
 	},
-	"wizardSteps": [{
-			"label": "Step 1",
-			"key": "step1"
-		},
-		{
-			"label": "Step 2",
-			"key": "step2"
-		},
-		{
-			"label": "Step 3",
-			"key": "step3"
-		},
-		{
-			"label": "Step 4",
-			"key": "step4",
-			"active": false
-		}
-	],
 	"userInterfaces": {
 		"configModal": {
 			"height": 200,
@@ -72,13 +56,15 @@
 	"schema": {
 		"arguments": {
 			"execute": {
-				"inArguments": [{
-					"myInArgument": {
-						"dataType": "<some data type>",
-						"isNullable": false,
-						"direction": "in"
+				"inArguments": [
+					{
+						"myInArgument": {
+							"dataType": "<some data type>",
+							"isNullable": false,
+							"direction": "in"
+						}
 					}
-				}],
+				],
 				"outArguments": []
 			}
 		}
