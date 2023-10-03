@@ -88,11 +88,8 @@ function onDoneButtonClick() {
     // we set must metaData.isConfigured in order to tell JB that
     // this activity is ready for activation
     activity.metaData.isConfigured = true;
-    console.log()
 
     // get the option that the user selected and save it to
-    const select = document.getElementById('discount-code');
-    const option = select.options[select.selectedIndex];
     const selected_creative = document.getElementById("selected_creative").value
 
     activity.arguments.execute.inArguments = [{
