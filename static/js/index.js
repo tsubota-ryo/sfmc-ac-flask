@@ -80,10 +80,10 @@ function onDoneButtonClick() {
     activity.arguments.execute.inArguments = [{
         creative: selected_creative.value,
         contact_key: "{{Contact.Key}}",
-        uid: "{{Contact.Attribute.JourneyEntrySource.score}}",
-        name: "{{Contact.Attribute.JourneyEntrySource.name}}",
-        city: "{{Contact.Attribute.JourneyEntrySource.city}}",
-        gender: "{{Contact.Attribute.JourneyEntrySource.gender}}"
+        uid: "{{Contact.Attribute.test_D1_user.score}}",
+        name: "{{Contact.Attribute.test_D1_user.name}}",
+        city: "{{Contact.Attribute.test_D1_user.city}}",
+        gender: "{{Contact.Attribute.test_D1_user.gender}}"
     }];
 
     // you can set the name that appears below the activity with the name property
