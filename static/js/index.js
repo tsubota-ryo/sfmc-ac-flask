@@ -90,15 +90,15 @@ function onDoneButtonClick() {
     activity.metaData.isConfigured = true;
 
     // get the option that the user selected and save it to
-    const selected_creative = document.getElementById("selected_creative").value
+    const selected_creative = document.getElementById("selected_creative")
 
     activity.arguments.execute.inArguments = [{
-        creative: selected_creative,
+        creative: selected_creative.value,
         
     }];
 
     // you can set the name that appears below the activity with the name property
-    activity.name = `Issue ${activity.arguments.execute.inArguments[0].discount}% Code`;
+    activity.name = `${activity.arguments.execute.inArguments[0].creative}`;
 
     console.log('------------ triggering:updateActivity({obj}) ----------------');
     console.log('Sending message back to updateActivity');
