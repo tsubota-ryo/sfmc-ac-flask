@@ -28,7 +28,7 @@ def publish():
     return render_template("index.html")
 
 @app.route("/save",methods=["post"])
-def publish():
+def save():
     print("save")
     return render_template("index.html")
 
