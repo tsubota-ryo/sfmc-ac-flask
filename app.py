@@ -34,7 +34,7 @@ def save():
     return render_template("index.html")
 
 @app.route("/validate",methods=["post"])
-def save():
+def validate():
     print("validate")
     return make_response('Success', 200)
 
