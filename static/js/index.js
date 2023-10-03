@@ -67,21 +67,6 @@ function onInitActivity(payload) {
     console.log('inArguments', inArguments);
     console.log('-------------------------------------------------');
 
-    // check if this activity has an incoming argument.
-    // this would be set on the server side when the activity executes
-    // (take a look at execute() in ./discountCode/app.js to see where that happens)
-    // const discountArgument = inArguments.find((arg) => arg.discount);
-
-    // console.log('Discount Argument', discountArgument);
-
-    // if a discountCode back argument was set, show the message in the view.
-    // if (discountArgument) {
-    //     selectDiscountCodeOption(discountArgument.discount);
-    // }
-
-    // if the discountCode back argument doesn't exist the user can pick
-    // a discountCode message from the drop down list. the discountCode back arg
-    // will be set once the journey executes the activity
 }
 
 function onDoneButtonClick() {
@@ -95,7 +80,7 @@ function onDoneButtonClick() {
     activity.arguments.execute.inArguments = [{
         creative: selected_creative.value,
         contact_key: "{{Contact.Key}}",
-        uid: "{{Contact.Attribute}}"
+        uid: "{{Contact.Attribute.JourneyEntrySource.UID}}"
     }];
 
     // you can set the name that appears below the activity with the name property
@@ -126,7 +111,6 @@ function setupEventHandlers() {
     document.getElementById('neko').addEventListener('click', nekoClick);
     document.getElementById('done').addEventListener('click', onDoneButtonClick);
     document.getElementById('cancel').addEventListener('click', onCancelButtonClick);
-    // document.getElementById('discount-code').addEventListener('change', onDiscountCodeSelectChange);
 }
 function inuClick(){
     const selected_creative = document.getElementById("selected_creative")
