@@ -9,7 +9,7 @@
 
 // Custom activities load inside an iframe. We'll use postmonger to manage
 // the cross-document messaging between Journey Builder and the activity
-import Postmonger from '/static/js/postmonger';
+//import Postmonger from '/static/js/postmonger';
 
 
 // Create a new connection for this session.
@@ -28,10 +28,10 @@ document.addEventListener('DOMContentLoaded', function main() {
     // Setup a test harness so we can interact with our custom activity
     // outside of journey builder using window functions & browser devtools.
     // This isn't required by your activity, its for example purposes only
-    setupExampleTestHarness();
+    // setupExampleTestHarness();
 
     // setup our ui event handlers
-    setupEventHandlers();
+    // setupEventHandlers();
 
     // Bind the initActivity event...
     // Journey Builder will respond with "initActivity" after it receives the "ready" signal
