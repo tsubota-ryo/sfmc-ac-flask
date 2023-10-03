@@ -8,7 +8,7 @@
 	"lang": {
 		"en-US": {
 			"name": "flask_test",
-			"description": ""
+			"description": "d1connect"
 		}
 	},
 	"arguments": {
@@ -18,10 +18,7 @@
 					"myInArgument": "inArgument coming from iframe"
 				},
 				{
-					"test": "test"
-				},
-				{
-					"phoneNumber": "{{Contact.Default.PhoneNumber}}"
+					"FirstName": "{{Contact.Attribute.Persona.FirstName}}"
 				}
 			],
 			"outArguments": [],
