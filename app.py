@@ -22,6 +22,12 @@ def execute():
     print(request.method)
     return request.get_json()
 
+@app.route("/publish",methods=["post"])
+def save():
+    print("publish")
+
+
+
 # アプリケーションを実行
 if __name__ == '__main__':
     app.run()
