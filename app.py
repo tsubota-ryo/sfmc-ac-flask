@@ -20,7 +20,7 @@ def config():
 def execute():
     print("execute")
     print(request.method)
-    return request.get_json()
+    return jsonify({'message': 'hello internal'}), 200
 
 @app.route("/publish",methods=["post"])
 def publish():

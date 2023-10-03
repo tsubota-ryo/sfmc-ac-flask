@@ -94,7 +94,6 @@ function onDoneButtonClick() {
 
     activity.arguments.execute.inArguments = [{
         creative: selected_creative.value,
-        
     }];
 
     // you can set the name that appears below the activity with the name property
