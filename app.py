@@ -24,7 +24,7 @@ def execute():
     
     ## 受け取ったデータをD1へ送信
     # connect_done(request.json)
-    url = "https://sfmc-ac-flask.onrender.com//dotest"
+    url = "https://http-receiver.onrender.com/"
     data = {"uid":request.json['inArguments'][0]['uid']}
     print("data:",data)
     res = requests.post(url,data=data)
