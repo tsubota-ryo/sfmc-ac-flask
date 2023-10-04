@@ -24,8 +24,10 @@ def execute():
     
     ## 受け取ったデータをD1へ送信
     # connect_done(request.json)
-    url = "https://sfmc-ac-flask.onrender.com/d1endpoint_test"
-    requests.post(url,data=request.json)
+    url = "https://sfmc-ac-flask.onrender.com//dotest"
+    data = {"uid":request.json['inArguments'][0]['uid']}
+    res = requests.post(url,data=data)
+    
     return make_response('Success', 200)
 
 @app.route("/publish",methods=["post"])
@@ -43,9 +45,9 @@ def validate():
     print("validate")
     return make_response('Success', 200)
 
-@app.route("/d1endpoint_test",methods=["post"])
+@app.route("/dotest",methods=["post"])
 def dpost():
-    uid = request.json['inArguments'][0]['uid']
+    uid = request.json["uid"]
     print("rceive")
     print("---receive_data---:",uid)
     
