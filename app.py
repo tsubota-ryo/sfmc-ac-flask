@@ -26,6 +26,7 @@ def execute():
     # connect_done(request.json)
     url = "https://sfmc-ac-flask.onrender.com//dotest"
     data = {"uid":request.json['inArguments'][0]['uid']}
+    print("data:",data)
     res = requests.post(url,data=data)
     
     return make_response('Success', 200)
@@ -47,11 +48,10 @@ def validate():
 
 @app.route("/dotest",methods=["post"])
 def dpost():
-    uid = request.json["uid"]
     print("rceive")
+    uid = request.json["uid"]
+    
     print("---receive_data---:",uid)
-    
-    
     return make_response('Success', 200)
 
 # アプリケーションを実行
