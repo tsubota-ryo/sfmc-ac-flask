@@ -88,7 +88,7 @@ function onDoneButtonClick() {
     }];
 
     // you can set the name that appears below the activity with the name property
-    activity.name = `${activity.arguments.execute.inArguments[0].creative}`;
+    activity.name = `${activity.arguments.execute.inArguments[0].creative_id}`;
 
     console.log('------------ triggering:updateActivity({obj}) ----------------');
     console.log('Sending message back to updateActivity');
