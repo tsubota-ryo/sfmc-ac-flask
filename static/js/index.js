@@ -78,9 +78,10 @@ function onDoneButtonClick() {
     const selected_creative = document.getElementById("selected_creative")
 
     activity.arguments.execute.inArguments = [{
-        creative: selected_creative.value,
+        creative_id: selected_creative.value,
         contact_key: "{{Contact.Key}}",
-        uid: "{{Contact.Attribute.D1_TEST_user.score}}",
+        uid: "{{Contact.Attribute.D1_TEST_user.UID}}",
+        acid: "{{Contact.Attribute.D1_TEST_user.ACID}}",
         name: "{{Contact.Attribute.D1_TEST_user.name}}",
         city: "{{Contact.Attribute.D1_TEST_user.city}}",
         gender: "{{Contact.Attribute.D1_TEST_user.gender}}"

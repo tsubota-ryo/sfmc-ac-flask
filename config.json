@@ -14,18 +14,8 @@
 	"arguments": {
 		"execute": {
 			"inArguments": [
-				{
-					"param": "{{D1_test_}}"
-				},
-				{
-					"contact": "{{Contact}}"
-				}
 			],
-			"outArguments": [{
-				"param": "{{D1_test_}}"
-			},{
-				"contact": "{{Contact}}"
-			}],
+			"outArguments": [],
 			"timeout": 100000,
 			"retryCount": 1,
 			"retryDelay": 10000,
