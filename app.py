@@ -23,7 +23,7 @@ def execute():
     print(request.json)
     
     ## 受け取ったデータをD1へ送信
-    connect_done(request.json)
+    # connect_done(request.json)
     url = "https://sfmc-ac-flask.onrender.com/d1endpoint_test"
     requests.post(url,data=request.json)
     return jsonify({'message': 'hello internal'}), 200
