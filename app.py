@@ -23,10 +23,7 @@ def execute():
     print(request.json)
     
     ## 受け取ったデータをD1へ送信
-    connect_done(requests.json)
-    
-    
-
+    connect_done(request.json)
     
     return jsonify({'message': 'hello internal'}), 200
 
