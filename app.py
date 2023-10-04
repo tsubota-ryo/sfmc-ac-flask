@@ -26,7 +26,7 @@ def execute():
     # connect_done(request.json)
     url = "https://sfmc-ac-flask.onrender.com/d1endpoint_test"
     requests.post(url,data=request.json)
-    return jsonify({'message': 'hello internal'}), 200
+    return make_response('Success', 200)
 
 @app.route("/publish",methods=["post"])
 def publish():
@@ -44,8 +44,9 @@ def validate():
     return make_response('Success', 200)
 
 @app.route("/d1endpoint_test",methods=["post"])
-def d1post():
+def dpost():
     uid = request.json['inArguments'][0]['uid']
+    print("rceive")
     print("---receive_data---:",uid)
     
     
