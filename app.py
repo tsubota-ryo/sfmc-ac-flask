@@ -51,6 +51,8 @@ def validate():
 def d1post():
     print("---receive_data----")
     print(request.json['inArguments'][0]['uid'])
+    
+    return make_response('Success', 200)
 
 # アプリケーションを実行
 if __name__ == '__main__':
