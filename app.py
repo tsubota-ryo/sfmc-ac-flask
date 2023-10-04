@@ -24,13 +24,9 @@ def execute():
     
     ## 受け取ったデータをD1へ送信
     connect_done(request.json)
-    
-    return jsonify({'message': 'hello internal'}), 200
-
-
-def connect_done(data):
     url = "https://sfmc-ac-flask.onrender.com/d1endpoint_test"
-    requests.post(url,data=data)
+    requests.post(url,data=request.json)
+    return jsonify({'message': 'hello internal'}), 200
 
 @app.route("/publish",methods=["post"])
 def publish():
@@ -49,8 +45,9 @@ def validate():
 
 @app.route("/d1endpoint_test",methods=["post"])
 def d1post():
-    print("---receive_data----")
-    print(request.json['inArguments'][0]['uid'])
+    uid = request.json['inArguments'][0]['uid']
+    print("---receive_data---:",uid)
+    
     
     return make_response('Success', 200)
 
