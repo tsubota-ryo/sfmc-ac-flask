@@ -50,7 +50,7 @@ def validate():
 @app.route("/d1endpoint_test",methods=["post"])
 def d1post():
     print("---receive_data----")
-    print(request.json)
+    print(request.json['inArguments'][0]['uid'])
 
 # アプリケーションを実行
 if __name__ == '__main__':
