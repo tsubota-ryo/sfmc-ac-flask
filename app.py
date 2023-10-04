@@ -31,7 +31,7 @@ def execute():
     res = requests.post(url,data=json.dumps(data))
     print(res.status_code)
     if res.status_code==200:
-        print("send success",response.txt)
+        print("send success",res.txt)
     
     return make_response('Success', 200)
 
