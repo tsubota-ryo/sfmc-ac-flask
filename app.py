@@ -26,9 +26,16 @@ def execute():
     ## 受け取ったデータをD1へ送信
     # connect_done(request.json)
     url = "https://http-receiver.onrender.com/"
-    data = {"uid":request.json['inArguments'][0]['uid']}
+    data = {
+        "contact_key": request.json['inArguments'][0]['contact_key'],
+        "uid":request.json['inArguments'][0]['uid'],
+        "acid":request.json['inArguments'][0]['acid'],
+        "creative_id":request.json['inArguments'][0]['creative_id']
+            }
     print("data:",data)
-    res = requests.post(url,data=json.dumps(data))
+    
+    headers = {'content-type': 'application/json'}
+    res = requests.post(url,data=json.dumps(data),headers=headers)
     print(res.status_code)
     if res.status_code==200:
         print("send success",res.txt)
