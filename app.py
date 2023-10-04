@@ -28,6 +28,8 @@ def execute():
     data = {"uid":request.json['inArguments'][0]['uid']}
     print("data:",data)
     res = requests.post(url,data=data)
+    if res.status_code==200:
+        print("send success",response.txt)
     
     return make_response('Success', 200)
 
