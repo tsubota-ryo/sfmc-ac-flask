@@ -1,6 +1,7 @@
 from flask import *
 import logging
 import requests
+import json
 
 # Flaskアプリケーションのインスタンスを作成
 app = Flask(__name__)
@@ -27,7 +28,8 @@ def execute():
     url = "https://http-receiver.onrender.com/"
     data = {"uid":request.json['inArguments'][0]['uid']}
     print("data:",data)
-    res = requests.post(url,data=data)
+    res = requests.post(url,data=json.dumps(data))
+    print(res.status_code)
     if res.status_code==200:
         print("send success",response.txt)
     
