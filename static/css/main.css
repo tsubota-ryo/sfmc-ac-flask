@@ -12,3 +12,8 @@
 .topmargin{
     margin-top: 30px;
 }
+
+.center {
+    display: block;
+    text-align: center;
+}

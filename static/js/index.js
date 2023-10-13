@@ -7,14 +7,6 @@
 // https://developer.salesforce.com/docs/atlas.en-us.noversion.mc-app-development.meta/mc-app-development/using-postmonger.htm
 
 
-// Custom activities load inside an iframe. We'll use postmonger to manage
-// the cross-document messaging between Journey Builder and the activity
-//import Postmonger from '/static/js/postmonger';
-
-
-// Create a new connection for this session.
-// We use this connection to talk to Journey Builder. You'll want to keep this
-// reference handy and pass it into your UI framework if you're using React, Angular, Vue, etc.
 const connection = new Postmonger.Session();
 
 
@@ -25,22 +17,11 @@ let activity = null;
 // Wait for the document to load before we doing anything
 document.addEventListener('DOMContentLoaded', function main() {
 
-    // Setup a test harness so we can interact with our custom activity
-    // outside of journey builder using window functions & browser devtools.
-    // This isn't required by your activity, its for example purposes only
-    // setupExampleTestHarness();
-
-    // setup our ui event handlers
-   
     setupEventHandlers();
 
     // Bind the initActivity event...
     // Journey Builder will respond with "initActivity" after it receives the "ready" signal
     connection.on('initActivity', onInitActivity);
-
-
-    // We're all set! let's signal Journey Builder
-    // that we're ready to receive the activity payload...
 
     // Tell the parent iFrame that we are ready.
     connection.trigger('ready');
@@ -75,10 +56,11 @@ function onDoneButtonClick() {
     activity.metaData.isConfigured = true;
 
     // get the option that the user selected and save it to
-    const selected_creative = document.getElementById("selected_creative")
+
+    const creative_id = document.querySelector("#content_id").value;
 
     activity.arguments.execute.inArguments = [{
-        creative_id: selected_creative.value,
+        creative_id: creative_id,
         contact_key: "{{Contact.Key}}",
         uid: "{{Contact.Attribute.D1_TEST_user.UID}}",
         acid: "{{Contact.Attribute.D1_TEST_user.ACID}}",
@@ -107,22 +89,8 @@ function onCancelButtonClick() {
     connection.trigger('requestInspectorClose');
 }
 
-
-
 function setupEventHandlers() {
     // Listen to events on the form
-    document.getElementById('inu').addEventListener('click', inuClick);
-    document.getElementById('neko').addEventListener('click', nekoClick);
     document.getElementById('done').addEventListener('click', onDoneButtonClick);
     document.getElementById('cancel').addEventListener('click', onCancelButtonClick);
-}
-function inuClick(){
-    const selected_creative = document.getElementById("selected_creative")
-    selected_creative.innerHTML = "犬を選択"
-    selected_creative.value="dog"
-}
-function nekoClick(){
-    const selected_creative = document.getElementById("selected_creative")
-    selected_creative.innerHTML = "猫を選択"
-    selected_creative.value="cat"
 }

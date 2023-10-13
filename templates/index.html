@@ -6,41 +6,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/css/semantic.min.css">
     <link rel="stylesheet" href="/static/css/main.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js"></script>
     <script src="/static/js/semantic.min.js"></script>
     <script src="/static/js/postmonger.js"></script>
+
     <title>SFMC CustomActivityTest</title>
 </head>
 
 <body>
     <div class="container">
-        <div class="ui attached segment">
-            <img id="inu" class="circular medium ui image floated" src="/static/img/inu.png">
-            <img id="neko" class="circular medium ui image" src="/static/img/neko.png">
+        <div class="ui form">
+            <div class="field">
+                <label>Content_id</label>
+                <input id="content_id" type="text" name="first-name" placeholder="コンテンツIDを入力してください。">
+            </div>
+
+            <div class="btn_group center">
+                <button class="ui primary right button" id="done">
+                    Save
+                </button>
+                <button class="ui right button" id="cancel">
+                    Cancel
+                </button>
+            </div>
         </div>
 
-        <div class="ui horizontal divider">
-
-        <div class="ui label big topmargin" id="selected_creative">
-            クリエイティブを選択してください。
-        </div></br>
+        <div class="ui horizontal center">
 
 
-        <div class="ui input topmargin">
-            <input type="text" placeholder="ACID">
-        </div>
 
-        <div class="btn_group">
-            <button class="ui primary right button" id="done">
-                Save
-            </button>
-            <button class="ui right button" id="cancel">
-                Cancel
-            </button>
-        </div>
         <input type="hidden" name="creative_value" value="">
 
-    </div>
-<script src="/static/js/index.js"></script>
+        </div>
+        <script src="/static/js/index.js"></script>
 </body>
 
 </html>
