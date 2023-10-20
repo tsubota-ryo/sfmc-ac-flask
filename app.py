@@ -85,8 +85,26 @@ def dpost():
 
 @app.route("/fstest",methods=["GET"])
 def fstest():
-    db = firestore.Client()
-    db.collection("test_collection").document().set({"test":1})
+    data = {
+        "contact_key": "teset1",
+        "uid":"test2",
+        "acid":"test3",
+        "creative_id":"test4"
+            }
+    logger.debug("data:",data)
+    
+    user = Users(data)
+    
+    try:
+        user.insert("smc_connect_users")
+        logger.debug("success")
+        return make_response('Success', 200)
+    except:
+        logger.debug("error")
+        return make_response('Error', 400)
+    
+    # db = firestore.Client()
+    # db.collection("test_collection").document().set({"test":1})
     return make_response('Success', 200)
     
 
