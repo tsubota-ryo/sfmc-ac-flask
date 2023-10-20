@@ -56,22 +56,22 @@ def execute():
     
     
 
-@app.route("/publish",methods=["post"])
+@app.route("/publish",methods=["POST"])
 def publish():
     print("publish")
     return make_response('Success', 200)
 
-@app.route("/save",methods=["post"])
+@app.route("/save",methods=["POST"])
 def save():
     print("save")
     return render_template("index.html")
 
-@app.route("/validate",methods=["post"])
+@app.route("/validate",methods=["POST"])
 def validate():
     print("validate")
     return make_response('Success', 200)
 
-@app.route("/dotest",methods=["post"])
+@app.route("/dotest",methods=["POST"])
 def dpost():
     print("rceive")
     uid = request.json["uid"]
@@ -79,7 +79,7 @@ def dpost():
     print("---receive_data---:",uid)
     return make_response('Success', 200)
 
-@app.route("/fstest",method=["get"])
+@app.route("/fstest",method=["GET"])
 def fstest():
     db = firestore.Client()
     db.collection("test_collection").document().set({"test":1})
