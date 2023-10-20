@@ -59,6 +59,7 @@ function onDoneButtonClick() {
 
     const creative_id = document.querySelector("#content_id").value;
 
+    //TODO: データエクステンション名に応じ変更する
     activity.arguments.execute.inArguments = [{
         creative_id: creative_id,
         contact_key: "{{Contact.Key}}",

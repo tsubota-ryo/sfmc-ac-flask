@@ -5,6 +5,7 @@ __pycache__/
 *DS_Store
 # C extensions
 *.so
+mpjl_fs.json
 
 # Distribution / packaging
 .Python
