@@ -79,12 +79,10 @@ def dpost():
     print("---receive_data---:",uid)
     return make_response('Success', 200)
 
-@app.route("/fstest",method=["GET"])
+@app.route("/fstest",methods=["GET"])
 def fstest():
     db = firestore.Client()
     db.collection("test_collection").document().set({"test":1})
-    
-    
     return make_response('Success', 200)
     
 
