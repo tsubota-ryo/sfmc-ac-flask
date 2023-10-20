@@ -27,9 +27,9 @@ def execute():
     print("execute")
     print(request.json)
     
-    ## 受け取ったデータをD1へ送信
+    ## 受け取ったデータをFireStoreへ登録
     # connect_done(request.json)
-    url = "https://http-receiver.onrender.com/"
+    # url = "https://http-receiver.onrender.com/"
     data = {
         "contact_key": request.json['inArguments'][0]['contact_key'],
         "uid":request.json['inArguments'][0]['uid'],
@@ -38,13 +38,23 @@ def execute():
             }
     print("data:",data)
     
-    headers = {'content-type': 'application/json'}
-    res = requests.post(url,data=json.dumps(data),headers=headers)
-    print(res.status_code)
-    if res.status_code==200:
-        print("send success",res.txt)
+    user = Users(data)
     
-    return make_response('Success', 200)
+    try:
+        user.insert("smc_connect_users")
+        return make_response('Success', 200)
+    except:
+        print("error")
+        return make_response('Error', 400)
+        
+    
+    # headers = {'content-type': 'application/json'}
+    # res = requests.post(url,data=json.dumps(data),headers=headers)
+    # print(res.status_code)
+    # if res.status_code==200:
+    #     print("send success",res.txt)
+    
+    
 
 @app.route("/publish",methods=["post"])
 def publish():
