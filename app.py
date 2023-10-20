@@ -79,6 +79,15 @@ def dpost():
     print("---receive_data---:",uid)
     return make_response('Success', 200)
 
+@app.route("/fstest",method=["get"])
+def fstest():
+    db = firestore.Client()
+    db.collection("test_collection").document().set({"test":1})
+    
+    
+    return make_response('Success', 200)
+    
+
 # アプリケーションを実行
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=8080)

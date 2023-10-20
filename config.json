@@ -14,9 +14,6 @@
 	"arguments": {
 		"execute": {
 			"inArguments": [
-				{
-					"param": "{{D1_test_}}"
-				}
 			],
 			"outArguments": [],
 			"timeout": 100000,
