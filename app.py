@@ -9,6 +9,8 @@ from models.users import Users
 
 # Flaskアプリケーションのインスタンスを作成
 app = Flask(__name__)
+logger = logging.getLogger('weblog')
+logger.setLevel(logging.DEBUG)
 
 # ルートURL ("/") へのアクセス時の処理
 @app.route("/")
@@ -25,6 +27,8 @@ def config():
 @app.route("/execute",methods=["GET", "POST"])
 def execute():
     print("execute")
+    logger.debug("execute")
+    logger.debug(request.json)
     print(request.json)
     
     ## 受け取ったデータをFireStoreへ登録
