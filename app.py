@@ -38,7 +38,8 @@ def execute():
         "contact_key": request.json['inArguments'][0]['contact_key'],
         "uid":request.json['inArguments'][0]['uid'],
         "acid":request.json['inArguments'][0]['acid'],
-        "creative_id":request.json['inArguments'][0]['creative_id']
+        "creative_id":request.json['inArguments'][0]['creative_id'],
+        "send_flg": False
             }
     print("data:",data)
     
@@ -51,15 +52,6 @@ def execute():
         print("error")
         return make_response('Error', 400)
         
-    
-    # headers = {'content-type': 'application/json'}
-    # res = requests.post(url,data=json.dumps(data),headers=headers)
-    # print(res.status_code)
-    # if res.status_code==200:
-    #     print("send success",res.txt)
-    
-    
-
 @app.route("/publish",methods=["POST"])
 def publish():
     print("publish")
@@ -83,31 +75,6 @@ def dpost():
     print("---receive_data---:",uid)
     return make_response('Success', 200)
 
-@app.route("/fstest",methods=["GET"])
-def fstest():
-    data = {
-        "contact_key": "teset1",
-        "uid":"test2",
-        "acid":"test3",
-        "creative_id":"test4"
-            }
-    logger.debug("data:",data)
-    
-    user = Users(data)
-    
-    try:
-        user.insert("smc_connect_users")
-        logger.debug("success")
-        return make_response('Success', 200)
-    except:
-        logger.debug("error")
-        return make_response('Error', 400)
-    
-    
-    # db = firestore.Client()
-    # db.collection("test_collection").document().set({"test":1})
-    return make_response('Success', 200)
-    
 
 # アプリケーションを実行
 if __name__ == '__main__':
