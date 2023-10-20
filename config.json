@@ -20,21 +20,21 @@
 			"retryCount": 1,
 			"retryDelay": 10000,
 			"concurrentRequests": 5,
-			"url": "https://sfmc-ac-flask.onrender.com/execute"
+			"url": "https://sfmc-done-test-akb3xrrmgq-uc.a.run.app/execute"
 		}
 	},
 	"configurationArguments": {
 		"save": {
-			"url": "https://sfmc-ac-flask.onrender.com/save"
+			"url": "https://sfmc-done-test-akb3xrrmgq-uc.a.run.app/save"
 		},
 		"publish": {
-			"url": "https://sfmc-ac-flask.onrender.com/publish"
+			"url": "https://sfmc-done-test-akb3xrrmgq-uc.a.run.app/publish"
 		},
 		"validate": {
-			"url": "https://sfmc-ac-flask.onrender.com/validate"
+			"url": "https://sfmc-done-test-akb3xrrmgq-uc.a.run.app/validate"
 		},
 		"stop": {
-			"url": "https://sfmc-ac-flask.onrender.com/stop"
+			"url": "https://sfmc-done-test-akb3xrrmgq-uc.a.run.app/stop"
 		}
 	},
 	"userInterfaces": {
