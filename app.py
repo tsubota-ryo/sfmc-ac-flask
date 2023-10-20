@@ -5,7 +5,7 @@ import json
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-import models.users
+from models.users import Users
 
 # Flaskアプリケーションのインスタンスを作成
 app = Flask(__name__)
