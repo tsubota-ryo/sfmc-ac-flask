@@ -3,8 +3,6 @@ USER root
 
 EXPOSE 8080:8080
 
-
-
 RUN apt-get update
 RUN pip install --upgrade pip
 RUN pip install --upgrade setuptools

@@ -26,50 +26,49 @@ def config():
 
 @app.route("/execute",methods=["GET", "POST"])
 def execute():
-    print("execute")
+
     logger.debug("execute")
     logger.debug(request.json)
-    print(request.json)
     
     ## 受け取ったデータをFireStoreへ登録
-    # connect_done(request.json)
-    # url = "https://http-receiver.onrender.com/"
+
     data = {
         "contact_key": request.json['inArguments'][0]['contact_key'],
         "uid":request.json['inArguments'][0]['uid'],
         "acid":request.json['inArguments'][0]['acid'],
         "creative_id":request.json['inArguments'][0]['creative_id'],
         "send_flg": False
-            }
-    print("data:",data)
+        }
+    logger.debug("data:",data)
     
     user = Users(data)
     
     try:
         user.insert("smc_connect_users")
+        logger.info("db connected")
         return make_response('Success', 200)
     except:
-        print("error")
+        logger.error("db connection error")
         return make_response('Error', 400)
         
 @app.route("/publish",methods=["POST"])
 def publish():
-    print("publish")
+    logger.debug("publish")
     return make_response('Success', 200)
 
 @app.route("/save",methods=["POST"])
 def save():
-    print("save")
+    logger.debug("save")
     return render_template("index.html")
 
 @app.route("/validate",methods=["POST"])
 def validate():
-    print("validate")
+    logger.debug("validate")
     return make_response('Success', 200)
 
 @app.route("/dotest",methods=["POST"])
 def dpost():
-    print("rceive")
+    logger.debug("rceive")
     uid = request.json["uid"]
     
     print("---receive_data---:",uid)
