@@ -43,6 +43,7 @@ def execute():
         "send_flg": False
         }
     logger.debug(f"data:{data}")
+    print(f"data:{data}")
     
     user = Users(data)
     
@@ -77,6 +78,14 @@ def dpost():
     print("---receive_data---:",uid)
     return make_response('Success', 200)
 
+@app.route("/storetest",methods=["GET"])
+def storetest():
+    db = firestore.Client()
+    db.collection("test_collection").document().set({"data":"test"})
+    
+    
+    
+    return make_response('Success', 200)
 
 # アプリケーションを実行
 if __name__ == '__main__':
