@@ -43,6 +43,7 @@ def execute():
         "send_flg": False
         }
     logger.debug(f"data:{data}")
+    loggle.debug(type(data))
     
 
     try:
@@ -84,7 +85,7 @@ def dpost():
 @app.route("/storetest",methods=["GET"])
 def storetest():
     db = firestore.Client()
-    db.collection("test_collection").document().set({"data":"test"})
+    db.collection("test_collection").document().set({"data":"test","send_flg":False})
     logger.debug("testdata insert")
     
     
