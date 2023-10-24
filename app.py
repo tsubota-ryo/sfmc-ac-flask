@@ -47,15 +47,16 @@ def execute():
 
     try:
         user = Users(data)
-        logger.info("--db insert start--")
         user.insert("smc_connect_users")
-        logger.info("--db insert end--")  
-        
-        return make_response('Success', 200)
+        logger.info("--insert end--")
+        # return make_response('Success', 200)
+    
     except Exception as e:
         logger.error(f"db connection error:{e}")
         
         return make_response('Error', 400)
+    
+    return make_response('Success', 200)
         
 @app.route("/publish",methods=["POST"])
 def publish():
