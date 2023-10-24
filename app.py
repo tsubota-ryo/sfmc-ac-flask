@@ -42,7 +42,7 @@ def execute():
         "creative_id":request.json['inArguments'][0]['creative_id'],
         "send_flg": False
         }
-    logger.debug("data:",data)
+    logger.debug(f"data:{data}")
     
     user = Users(data)
     
