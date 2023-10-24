@@ -7,6 +7,7 @@ class Users():
     def __init__(self,data):
         self.db = firestore.Client()
         self.data = data
+        print("init")
         
     def get_documents(self,collection_name):
         self.docs = self.db.collection(collection_name).get()
