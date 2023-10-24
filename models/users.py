@@ -9,6 +9,8 @@ class Users():
     def __init__(self,data):
         self.logger = logging.getLogger('weblog')
         self.logger.setLevel(logging.DEBUG)
+        client = google.cloud.logging.Client()
+        client.setup_logging()
         self.logger.info("init start")
         self.db = firestore.Client()
         print("create db")
