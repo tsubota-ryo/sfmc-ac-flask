@@ -20,7 +20,10 @@ class Users():
     def insert(self,collection_name):
         self.logger.info(collection_name)
         self.logger.info(self.data)
-        self.db.collection(collection_name).document().set(self.data)
+        try:
+            self.db.collection(collection_name).document().set(self.data)
+        except Exception as e:
+            logger.error(e)
         
     # TODO:validation check
     # def validation_data(self,data):
