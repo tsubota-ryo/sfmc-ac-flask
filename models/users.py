@@ -1,11 +1,15 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
+import logging
+import google.cloud.logging
 
 class Users():
     
     def __init__(self,data):
-        print("init start")
+        self.logger = logging.getLogger('weblog')
+        self.logger.setLevel(logging.DEBUG)
+        self.logger.info("init start")
         self.db = firestore.Client()
         print("create db")
         
@@ -14,7 +18,7 @@ class Users():
         
 
     def insert(self,collection_name):
-        print(collection_name)
+        self.logger.info(collection_name)
         print("------insert data------")
         print(self.data)
         self.db.collection(collection_name).document().set(self.data)
