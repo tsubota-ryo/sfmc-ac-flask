@@ -50,7 +50,7 @@ def execute():
         user = Users(data)
         user.insert("smc_connect_users")
         logger.info("--insert end--")
-        # return make_response('Success', 200)
+        return make_response('Success', 200)
     
     except Exception as e:
         logger.error(f"db connection error:{e}")
