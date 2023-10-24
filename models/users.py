@@ -20,7 +20,7 @@ class Users():
     def insert(self,collection_name):
         self.logger.info(collection_name)
 
-        self.logger.info("selfdata:"+self.data)
+        self.logger.info(self.data)
         self.db.collection(collection_name).document().set(self.data)
         
     # TODO:validation check
