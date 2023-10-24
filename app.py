@@ -8,6 +8,7 @@ from firebase_admin import firestore
 import google.cloud.logging
 from models.users import Users
 
+
 # Flaskアプリケーションのインスタンスを作成
 app = Flask(__name__)
 logger = logging.getLogger('weblog')
@@ -43,11 +44,12 @@ def execute():
         }
     logger.debug(f"data:{data}")
     
-    user = Users(data)
-    logger.info("--db insert start--")
-    user.insert("smc_connect_users")
-    logger.info("--db insert end--")
-    try:    
+
+    try:
+        user = Users(data)
+        logger.info("--db insert start--")
+        user.insert("smc_connect_users")
+        logger.info("--db insert end--")  
         
         return make_response('Success', 200)
     except Exception as e:
