@@ -44,17 +44,19 @@ def execute():
     logger.debug(f"data:{data}")
     
     user = Users(data)
+    user.insert("smc_connect_users")
+    logger.info("--db connected--")
     try:    
-        user.insert("smc_connect_users")
-        logger.info("--db connected--")
+        
         return make_response('Success', 200)
-    except:
-        logger.error("db connection error")
+    except Exception as e:
+        logger.error(f"db connection error:{e}")
+        
         return make_response('Error', 400)
         
 @app.route("/publish",methods=["POST"])
 def publish():
-    logger.debug("publish")
+    logger.debug("--publish--")
     return make_response('Success', 200)
 
 @app.route("/save",methods=["POST"])
@@ -79,7 +81,7 @@ def dpost():
 def storetest():
     db = firestore.Client()
     db.collection("test_collection").document().set({"data":"test"})
-    
+    logger.debug("testdata insert")
     
     
     return make_response('Success', 200)

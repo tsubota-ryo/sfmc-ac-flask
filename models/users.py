@@ -14,6 +14,7 @@ class Users():
 
 
     def insert(self,collection_name):
+        print(collection_name)
         self.db.collection(collection_name).document().set(self.data)
     
 
