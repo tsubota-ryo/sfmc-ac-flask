@@ -30,11 +30,10 @@ def config():
 @app.route("/execute",methods=["GET", "POST"])
 def execute():
 
-    logger.debug("execute")
+    logger.info("--execute--")
     logger.debug(request.json)
     
     ## 受け取ったデータをFireStoreへ登録
-
     data = {
         "contact_key": request.json['inArguments'][0]['contact_key'],
         "uid":request.json['inArguments'][0]['uid'],
@@ -43,13 +42,11 @@ def execute():
         "send_flg": False
         }
     logger.debug(f"data:{data}")
-    print(f"data:{data}")
     
     user = Users(data)
-    
-    try:
+    try:    
         user.insert("smc_connect_users")
-        logger.info("db connected")
+        logger.info("--db connected--")
         return make_response('Success', 200)
     except:
         logger.error("db connection error")
@@ -62,17 +59,17 @@ def publish():
 
 @app.route("/save",methods=["POST"])
 def save():
-    logger.debug("save")
+    logger.debug("--save--")
     return render_template("index.html")
 
 @app.route("/validate",methods=["POST"])
 def validate():
-    logger.debug("validate")
+    logger.debug("--validate--")
     return make_response('Success', 200)
 
 @app.route("/dotest",methods=["POST"])
 def dpost():
-    logger.debug("rceive")
+    logger.debug("--receive--")
     uid = request.json["uid"]
     
     print("---receive_data---:",uid)
