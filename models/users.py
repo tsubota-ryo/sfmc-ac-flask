@@ -5,9 +5,12 @@ from firebase_admin import firestore
 class Users():
     
     def __init__(self,data):
+        print("init start")
         self.db = firestore.Client()
+        print("create db")
+        
         self.data = data
-        print("init")
+        print("init end")
         
     def get_documents(self,collection_name):
         self.docs = self.db.collection(collection_name).get()
