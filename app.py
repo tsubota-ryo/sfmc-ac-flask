@@ -43,7 +43,7 @@ def execute():
         "send_flg": False
         }
     logger.debug(f"data:{data}")
-    loggle.debug(type(data))
+    logger.debug(type(data))
     
 
     try:
