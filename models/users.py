@@ -12,7 +12,7 @@ class Users():
         client = google.cloud.logging.Client()
         client.setup_logging()
         self.logger.info("init start")
-        self.db = firestore.Client()
+        # self.db = firestore.Client()
         
         self.data = data
 
@@ -20,6 +20,7 @@ class Users():
     def insert(self,collection_name):
         self.logger.info(collection_name)
         self.logger.info(self.data)
+        self.db = firestore.Client()
         try:
             self.db.collection(collection_name).document().set(self.data)
         except Exception as e:
