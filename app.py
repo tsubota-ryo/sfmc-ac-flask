@@ -6,8 +6,6 @@ import json
 from google.cloud import firestore
 from models.users import Users
 
-
-
 # Flaskアプリケーションのインスタンスを作成
 app = Flask(__name__)
 
@@ -43,7 +41,7 @@ def execute():
         "contact_key": request.json['inArguments'][0]['contact_key'],
         "uid":request.json['inArguments'][0]['uid'],
         "acid":request.json['inArguments'][0]['acid'],
-        "creative_id":request.json['inArguments'][0]['creative_id'],
+        "content_id":request.json['inArguments'][0]['content_id'],
         "send_flg": False
         }
     logger.debug(f"data:{data}")

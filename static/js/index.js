@@ -57,11 +57,11 @@ function onDoneButtonClick() {
 
     // get the option that the user selected and save it to
 
-    const creative_id = document.querySelector("#content_id").value;
+    const content_id = document.querySelector("#content_id").value;
 
     //TODO: データエクステンション名に応じ変更する
     activity.arguments.execute.inArguments = [{
-        creative_id: creative_id,
+        content_id: content_id,
         contact_key: "{{Contact.Key}}",
         uid: "{{Contact.Attribute.D1_TEST_user.UID}}",
         acid: "{{Contact.Attribute.D1_TEST_user.ACID}}",
@@ -71,7 +71,7 @@ function onDoneButtonClick() {
     }];
 
     // you can set the name that appears below the activity with the name property
-    activity.name = `${activity.arguments.execute.inArguments[0].creative_id}`;
+    activity.name = `${activity.arguments.execute.inArguments[0].content_id}`;
 
     console.log('------------ triggering:updateActivity({obj}) ----------------');
     console.log('Sending message back to updateActivity');
