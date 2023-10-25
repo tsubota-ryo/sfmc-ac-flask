@@ -16,13 +16,13 @@ class Users():
         self.data = data
 
 
-    def insert(self,collection_name):
+    def insert(self,collection_name,db):
 
         try:
             self.logger.info(collection_name)
             self.logger.info(self.data)
 
-            self.db.collection(collection_name).document().set(self.data)
+            db.collection(collection_name).document().set(self.data)
 
         except Exception as e:
             self.logger.error(e)
