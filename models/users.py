@@ -7,7 +7,7 @@ import google.cloud.logging
 class Users():
     
     def __init__(self,data):
-        self.logger = logging.getLogger('weblog')
+        self.logger = logging.getLogger('weblog').getChild("uers")
         self.logger.setLevel(logging.DEBUG)
         client = google.cloud.logging.Client()
         client.setup_logging()
@@ -24,7 +24,7 @@ class Users():
         try:
             self.db.collection(collection_name).document().set(self.data)
         except Exception as e:
-            logger.error(e)
+            self.logger.error(e)
         
     # TODO:validation check
     # def validation_data(self,data):
