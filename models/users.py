@@ -6,7 +6,7 @@ import google.cloud.logging
 
 class Users():
     
-    def __init__(self,db, data):
+    def __init__(self, db, data):
         self.logger = logging.getLogger('weblog').getChild("uers")
         self.logger.setLevel(logging.DEBUG)
         client = google.cloud.logging.Client()

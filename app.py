@@ -3,9 +3,7 @@ import logging
 import google.cloud.logging
 import requests
 import json
-import firebase_admin
-from firebase_admin import credentials
-from firebase_admin import firestore
+from google.cloud import firestore
 from models.users import Users
 
 
