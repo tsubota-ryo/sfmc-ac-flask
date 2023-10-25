@@ -51,8 +51,11 @@ def execute():
     
 
     try:
+        logger.debug(type(db))
+        logger.debug(db)
         user = Users(db, data)
-        user.insert("smc_connect_users")
+        
+        user.insert("smc_connect_users",db)
         logger.info("--insert end--")
         return make_response('Success', 200)
     
