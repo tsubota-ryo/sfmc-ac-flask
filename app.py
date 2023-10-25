@@ -45,15 +45,10 @@ def execute():
         "send_flg": False
         }
     logger.debug(f"data:{data}")
-    logger.debug(type(data))
-    
 
     try:
-        logger.debug(type(db))
-        logger.debug(db)
-        user = Users(db, data)
-        
-        user.insert("smc_connect_users",db)
+        user = Users(data)       
+        user.insert(db,"smc_connect_users")
         logger.info("--insert end--")
         return make_response('Success', 200)
     
@@ -61,9 +56,7 @@ def execute():
         logger.error(f"db connection error:{e}")
         
         return make_response('Error', 400)
-    
-    return make_response('Success', 200)
-        
+            
 @app.route("/publish",methods=["POST"])
 def publish():
     logger.debug("--publish--")

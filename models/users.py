@@ -6,24 +6,23 @@ import google.cloud.logging
 
 class Users():
     
-    def __init__(self, db, data):
+    def __init__(self, data,db):
         self.logger = logging.getLogger('weblog').getChild("uers")
         self.logger.setLevel(logging.DEBUG)
         client = google.cloud.logging.Client()
         client.setup_logging()
-        self.logger.info("init start")
-        self.db = db
         self.data = data
+        self.db = db
+        
 
-
-    def insert(self,collection_name,db):
+    def insert(self,db,collection_name):
 
         try:
-            self.logger.info(collection_name)
-            self.logger.info(self.data)
 
+            self.logger.info(self.db)
+            self.logger.info("--insert start--")
             db.collection(collection_name).document().set(self.data)
-
+            self.logger.info("--insert end--")
         except Exception as e:
             self.logger.error(e)
             raise
