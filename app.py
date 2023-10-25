@@ -9,12 +9,20 @@ from firebase_admin import firestore
 from models.users import Users
 
 
+
 # Flaskアプリケーションのインスタンスを作成
 app = Flask(__name__)
+
 logger = logging.getLogger('weblog')
 logger.setLevel(logging.DEBUG)
 client = google.cloud.logging.Client()
 client.setup_logging()
+db = None
+
+@app.before_first_request
+def preparation():
+    global db
+    db = db or firestore.Client()
 
 # ルートURL ("/") へのアクセス時の処理
 @app.route("/")
@@ -47,7 +55,7 @@ def execute():
     
 
     try:
-        user = Users(data)
+        user = Users(db, data)
         user.insert("smc_connect_users")
         logger.info("--insert end--")
         return make_response('Success', 200)
