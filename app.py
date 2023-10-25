@@ -47,9 +47,9 @@ def execute():
     logger.debug(f"data:{data}")
 
     try:
-        user = Users(data)       
+        user = Users(data,db)       
         user.insert(db,"smc_connect_users")
-        logger.info("--insert end--")
+        
         return make_response('Success', 200)
     
     except Exception as e:
