@@ -48,7 +48,7 @@ def execute():
 
     try:
         logger.info("--insert start--")
-        logger.info("db")
+        logger.info(db)
         # db.collection("smc_connect_users").document().set(data)
         db.collection("test_collection").document().set({"data":"test","send_flg":False})
         logger.info("--insert end--")
