@@ -35,36 +35,20 @@ def execute():
 
     logger.info("--execute--")
     ## 受け取ったデータをFireStoreへ登録
+    jdata = request.json['inArguments'][0]
     data = {
-        "contact_key": request.json['inArguments'][0]['contact_key'],
-        "uid":request.json['inArguments'][0]['uid'],
-        "acid":request.json['inArguments'][0]['acid'],
-        "content_id":request.json['inArguments'][0]['content_id'],
+        "contact_key": jdata['contact_key'],
+        "uid": jdata['uid'],
+        "acid": jdata['acid'],
+        "content_id": jdata['content_id'],
         "send_flg": False
         }
     logger.debug(f"data:{data}")
 
     db.collection("smc_connect_users").add(data)
     logger.info("--insert end--")
-    return make_response('Success', 200)
+    return render_template("index.html")
 
-
-
-    # try:
-    #     logger.info("--insert start--")
-    #     logger.info(db)
-    #     # db.collection("smc_connect_users").document().set(data)
-    #     db.collection("test_collection").document().set({"data":"test","send_flg":False})
-    #     logger.info("--insert end--")
-    #     # user = Users(data,db)       
-    #     # user.insert(db,"smc_connect_users")
-        
-    #     return make_response('Success', 200)
-    
-    # except Exception as e:
-    #     logger.error(f"db connection error:{e}")
-        
-    #     return make_response('Error', 400)
             
 @app.route("/publish",methods=["POST"])
 def publish():
