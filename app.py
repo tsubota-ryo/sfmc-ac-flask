@@ -3,7 +3,7 @@ import logging
 import google.cloud.logging
 import requests
 import json
-from google.cloud import firestore
+from firebase_admin import firestore
 from models.users import Users
 
 # Flaskアプリケーションのインスタンスを作成
@@ -47,7 +47,9 @@ def execute():
     logger.debug(f"data:{data}")
 
     try:
+        logger.info("--insert start--")
         db.collection("smc_connect_users").document().set(data)
+        logger.info("--insert end--")
         # user = Users(data,db)       
         # user.insert(db,"smc_connect_users")
         
