@@ -92,7 +92,7 @@ def dpost():
 @app.route("/storetest",methods=["GET"])
 def storetest():
     db = firestore.Client()
-    db.collection("test_collection").document().set({"data":"test","send_flg":False})
+    db.collection("test_collection").document().set({'contact_key': 'ryo-tsubota@dac.co.jp', 'uid': '1212', 'acid': '50dbb3948b683b5a', 'content_id': '39812', 'send_flg': False})
     logger.debug("testdata insert")
     
     
