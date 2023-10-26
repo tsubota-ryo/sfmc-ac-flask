@@ -45,22 +45,24 @@ def execute():
         "send_flg": False
         }
     logger.debug(f"data:{data}")
-
-    try:
-        logger.info("--insert start--")
-        logger.info(db)
-        # db.collection("smc_connect_users").document().set(data)
-        db.collection("test_collection").document().set({"data":"test","send_flg":False})
-        logger.info("--insert end--")
-        # user = Users(data,db)       
-        # user.insert(db,"smc_connect_users")
+    logger.info(db)
+    db.collection("smc_connect_users").document().set(data)
+    logger.info("--insert end--")
+    # try:
+    #     logger.info("--insert start--")
+    #     logger.info(db)
+    #     # db.collection("smc_connect_users").document().set(data)
+    #     db.collection("test_collection").document().set({"data":"test","send_flg":False})
+    #     logger.info("--insert end--")
+    #     # user = Users(data,db)       
+    #     # user.insert(db,"smc_connect_users")
         
-        return make_response('Success', 200)
+    #     return make_response('Success', 200)
     
-    except Exception as e:
-        logger.error(f"db connection error:{e}")
+    # except Exception as e:
+    #     logger.error(f"db connection error:{e}")
         
-        return make_response('Error', 400)
+    #     return make_response('Error', 400)
             
 @app.route("/publish",methods=["POST"])
 def publish():
