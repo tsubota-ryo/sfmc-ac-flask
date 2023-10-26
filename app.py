@@ -30,7 +30,7 @@ def config():
         jdata = json.load(f)
     return jsonify(jdata)
 
-@app.route("/execute",methods=["GET", "POST"])
+@app.route("/execute",methods=["POST"])
 def execute():
 
     logger.info("--execute--")
