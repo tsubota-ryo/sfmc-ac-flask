@@ -47,8 +47,9 @@ def execute():
     logger.debug(f"data:{data}")
 
     try:
-        user = Users(data,db)       
-        user.insert(db,"smc_connect_users")
+        db.collection("smc_connect_users").document().set(data)
+        # user = Users(data,db)       
+        # user.insert(db,"smc_connect_users")
         
         return make_response('Success', 200)
     
