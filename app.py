@@ -44,7 +44,7 @@ def execute():
         }
     logger.debug(f"data:{data}")
 
-    # db.collection("smc_connect_users").document().set(data)
+    db.collection("smc_connect_users").add(data)
     logger.info("--insert end--")
     return make_response('Success', 200)
 
