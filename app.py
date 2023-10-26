@@ -34,8 +34,6 @@ def config():
 def execute():
 
     logger.info("--execute--")
-    logger.debug(request.json)
-    
     ## 受け取ったデータをFireStoreへ登録
     data = {
         "contact_key": request.json['inArguments'][0]['contact_key'],
@@ -45,7 +43,7 @@ def execute():
         "send_flg": False
         }
     logger.debug(f"data:{data}")
-    logger.info(db)
+
     db.collection("smc_connect_users").document().set(data)
     logger.info("--insert end--")
     return make_response('Success', 200)
