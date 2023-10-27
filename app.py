@@ -19,9 +19,7 @@ client.setup_logging()
 global db
 
 db = firestore.Client()
-with open('./fileconfig.yaml') as file:
-    global config
-    config = yaml.safe_load(file)
+
 
 # ルートURL ("/") へのアクセス時の処理
 @app.route("/")
@@ -37,6 +35,9 @@ def config():
 
 @app.route("/execute",methods=["POST"])
 def execute():
+    with open('./fileconfig.yaml') as file:
+        global config
+        config = yaml.safe_load(file)
     logger.info("--execute--")
     
     ## 受け取ったデータをFireStoreへ登録
