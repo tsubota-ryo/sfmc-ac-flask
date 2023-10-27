@@ -41,7 +41,8 @@ def execute():
     jdata = request.json['inArguments'][0]
     logger.debug(f"jdata:{jdata}")
     users = Users(db, jdata)
-    users.insert(config["collection_name"])
+    logger.debug(config["collection_name"])
+    users.insert("smc_connect_users")
     logger.info("--insert end--")
     
     return make_response('Success', 200)
