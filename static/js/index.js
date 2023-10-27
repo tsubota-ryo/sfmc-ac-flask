@@ -66,8 +66,7 @@ function onDoneButtonClick() {
         uid: "{{Contact.Attribute.D1_TEST_user.UID}}",
         acid: "{{Contact.Attribute.D1_TEST_user.ACID}}",
         name: "{{Contact.Attribute.D1_TEST_user.name}}",
-        city: "{{Contact.Attribute.D1_TEST_user.city}}",
-        gender: "{{Contact.Attribute.D1_TEST_user.gender}}"
+        city: "{{Contact.Attribute.D1_TEST_user.campaign_id}}"
     }];
 
     // you can set the name that appears below the activity with the name property

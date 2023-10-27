@@ -40,6 +40,7 @@ def execute():
         "contact_key": jdata['contact_key'],
         "uid": jdata['uid'],
         "acid": jdata['acid'],
+        "campaign_id": jdata['campaign_id'],
         "content_id": jdata['content_id'],
         "send_flg": False
         }
