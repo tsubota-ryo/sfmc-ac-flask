@@ -43,7 +43,7 @@ def execute():
     logger.debug(f"jdata:{jdata}")
     users = Users(db, jdata)
     users.insert("smc_connect_users")
-    logger.info("--insert end--")
+
     
     return make_response('Success', 200)
 

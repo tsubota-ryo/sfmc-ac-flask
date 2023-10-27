@@ -26,9 +26,9 @@ class Users():
     def insert(self,collection_name):
 
         try:
-            self.logger.info("--insert start--")
+            self.logger.info("--insert start u--")
             self.db.collection(collection_name).add(self.data)
-            self.logger.info("--insert end--")
+            self.logger.info("--insert end u--")
         except Exception as e:
             self.logger.error(e)
             raise
