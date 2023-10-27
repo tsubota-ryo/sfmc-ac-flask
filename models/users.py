@@ -15,13 +15,12 @@ class Users():
         self.db = db
         
 
-    def insert(self,db,collection_name):
+    def insert(self,collection_name):
 
         try:
-
             self.logger.info(self.db)
             self.logger.info("--insert start--")
-            db.collection(collection_name).document().set(self.data)
+            self.db.collection(collection_name).add(self.data)
             self.logger.info("--insert end--")
         except Exception as e:
             self.logger.error(e)
