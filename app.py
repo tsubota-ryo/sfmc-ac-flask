@@ -5,7 +5,7 @@ import requests
 import json
 from firebase_admin import firestore
 from models.users import Users
-
+import yaml
 
 # Flaskアプリケーションのインスタンスを作成
 app = Flask(__name__)
@@ -18,6 +18,8 @@ client.setup_logging()
 
 global db
 db = firestore.Client()
+with open('config.yml', 'r') as yml:
+    config = yaml.safe_load(yml)
 
 # ルートURL ("/") へのアクセス時の処理
 @app.route("/")
@@ -33,28 +35,16 @@ def config():
 
 @app.route("/execute",methods=["POST"])
 def execute():
-    
-
     logger.info("--execute--")
+    
     ## 受け取ったデータをFireStoreへ登録
     jdata = request.json['inArguments'][0]
     logger.debug(f"jdata:{jdata}")
-    data = {
-        "contact_key": jdata['contact_key'],
-        "uid": jdata['uid'],
-        "acid": jdata['acid'],
-        "campaign_id": jdata['campaign_id'],
-        "content_id": jdata['content_id'],
-        "send_flg": False
-        }
-    
-    users = Users(data,db)
-    users.insert("smc_user")
-    logger.debug(f"data:{data}")
-
-    db.collection("smc_connect_users").add(data)
+    users = Users(db, jdata)
+    users.insert(collection_name = config["collection_name"])
     logger.info("--insert end--")
-    return render_template("index.html")
+    
+    return make_response('Success', 200)
 
             
 @app.route("/publish",methods=["POST"])

@@ -6,19 +6,26 @@ import google.cloud.logging
 
 class Users():
     
-    def __init__(self, data,db):
-        self.logger = logging.getLogger('weblog').getChild("uers")
+    def __init__(self, db, jdata):
+        self.logger = logging.getLogger('weblog').getChild("users")
         self.logger.setLevel(logging.DEBUG)
         client = google.cloud.logging.Client()
         client.setup_logging()
-        self.data = data
-        self.db = db
+
+        self.db = db        
+        self.data = {
+            "contact_key": jdata['contact_key'],
+            "uid": jdata['uid'],
+            "acid": jdata['acid'],
+            "campaign_id": jdata['campaign_id'],
+            "content_id": jdata['content_id'],
+            "send_flg": False
+        }
         
 
     def insert(self,collection_name):
 
         try:
-            self.logger.info(self.db)
             self.logger.info("--insert start--")
             self.db.collection(collection_name).add(self.data)
             self.logger.info("--insert end--")
