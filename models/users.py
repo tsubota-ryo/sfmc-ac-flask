@@ -8,7 +8,6 @@ class Users():
     
     def __init__(self, db, jdata):
         self.logger = logging.getLogger('weblog').getChild("users")
-        self.logger.setLevel(logging.DEBUG)
         client = google.cloud.logging.Client()
         client.setup_logging()
 
