@@ -36,6 +36,7 @@ def execute():
     logger.info("--execute--")
     ## 受け取ったデータをFireStoreへ登録
     jdata = request.json['inArguments'][0]
+    logger.debug(f"jdata:{jdata}")
     data = {
         "contact_key": jdata['contact_key'],
         "uid": jdata['uid'],
