@@ -7,8 +7,8 @@
 	"type": "REST",
 	"lang": {
 		"en-US": {
-			"name": "smc_actest",
-			"description": "d1connect"
+			"name": "DialogOne",
+			"description": "Connet to DialogOne"
 		}
 	},
 	"arguments": {
@@ -16,7 +16,7 @@
 			"inArguments": [
 			],
 			"outArguments": [],
-			"timeout": 100000,
+			"timeout": 20000,
 			"retryCount": 1,
 			"retryDelay": 10000,
 			"concurrentRequests": 1,
