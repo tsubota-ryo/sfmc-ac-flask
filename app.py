@@ -19,7 +19,7 @@ client.setup_logging()
 global db
 global config
 db = firestore.Client()
-with open('config.yaml', 'r') as file:
+with open('./config.yaml') as file:
     config = yaml.safe_load(file)
 
 # ルートURL ("/") へのアクセス時の処理
