@@ -12,7 +12,7 @@ const connection = new Postmonger.Session();
 
 // we'll store the activity on this variable when we receive it
 let activity = null;
-
+const dataExtentionName = "D1_TEST_user";
 
 // Wait for the document to load before we doing anything
 document.addEventListener('DOMContentLoaded', function main() {
@@ -60,13 +60,14 @@ function onDoneButtonClick() {
     const content_id = document.querySelector("#content_id").value;
 
     //TODO: データエクステンション名に応じ変更する
+    
     activity.arguments.execute.inArguments = [{
         content_id: content_id,
         contact_key: "{{Contact.Key}}",
-        uid: "{{Contact.Attribute.D1_TEST_user.UID}}",
-        acid: "{{Contact.Attribute.D1_TEST_user.ACID}}",
-        name: "{{Contact.Attribute.D1_TEST_user.name}}",
-        campaign_id: "{{Contact.Attribute.D1_TEST_user.campaign_id}}"
+        uid: `{{Contact.Attribute.${dataExtentionName}.UID}}`,
+        acid: `{{Contact.Attribute.${dataExtentionName}.ACID}}`,
+        name: `{{Contact.Attribute.${dataExtentionName}.name}}`,
+        campaign_id: `{{Contact.Attribute.${dataExtentionName}.campaign_id}}`
     }];
 
     // you can set the name that appears below the activity with the name property

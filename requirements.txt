@@ -1,6 +1,7 @@
-flask
+flask==3.0.0
 gunicorn==19.9.0
-requests
-firebase-admin
-google-cloud-firestore
-google-cloud-logging
+requests==2.31.0
+firebase-admin==6.2.0
+google-cloud-firestore==2.13.0
+google-cloud-logging==3.8.0
+PyYAML==6.0.1

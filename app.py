@@ -6,6 +6,7 @@ import json
 from firebase_admin import firestore
 from models.users import Users
 
+
 # Flaskアプリケーションのインスタンスを作成
 app = Flask(__name__)
 
@@ -32,6 +33,7 @@ def config():
 
 @app.route("/execute",methods=["POST"])
 def execute():
+    
 
     logger.info("--execute--")
     ## 受け取ったデータをFireStoreへ登録
@@ -45,6 +47,9 @@ def execute():
         "content_id": jdata['content_id'],
         "send_flg": False
         }
+    
+    user = Users(data,db)
+    users.insert("smc_user")
     logger.debug(f"data:{data}")
 
     db.collection("smc_connect_users").add(data)
