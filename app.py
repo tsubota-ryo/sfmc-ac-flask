@@ -18,8 +18,8 @@ client.setup_logging()
 
 global db
 db = firestore.Client()
-with open('config.yaml', 'r') as yml:
-    config = yaml.safe_load(yml)
+with open('config.yaml', 'r') as file:
+    config = yaml.safe_load(file)
 
 # ルートURL ("/") へのアクセス時の処理
 @app.route("/")
@@ -41,7 +41,7 @@ def execute():
     jdata = request.json['inArguments'][0]
     logger.debug(f"jdata:{jdata}")
     users = Users(db, jdata)
-    users.insert(collection_name = config["collection_name"])
+    users.insert(config["collection_name"])
     logger.info("--insert end--")
     
     return make_response('Success', 200)
