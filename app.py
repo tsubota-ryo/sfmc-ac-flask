@@ -48,7 +48,7 @@ def execute():
         "send_flg": False
         }
     
-    user = Users(data,db)
+    users = Users(data,db)
     users.insert("smc_user")
     logger.debug(f"data:{data}")
 
