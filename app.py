@@ -17,6 +17,7 @@ client.setup_logging()
 
 
 global db
+global config
 db = firestore.Client()
 with open('config.yaml', 'r') as file:
     config = yaml.safe_load(file)
@@ -41,7 +42,10 @@ def execute():
     jdata = request.json['inArguments'][0]
     logger.debug(f"jdata:{jdata}")
     users = Users(db, jdata)
-    logger.debug(config["collection_name"])
+    try:
+        logger.debug(config["collection_name"])
+    except Exception as e:
+        logger.debug(e)
     users.insert("smc_connect_users")
     logger.info("--insert end--")
     
