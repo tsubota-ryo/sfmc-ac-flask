@@ -35,19 +35,13 @@ def config():
 
 @app.route("/execute",methods=["POST"])
 def execute():
-    with open('./fileconfig.yaml') as file:
-        global config
-        config = yaml.safe_load(file)
+
     logger.info("--execute--")
     
     ## 受け取ったデータをFireStoreへ登録
     jdata = request.json['inArguments'][0]
     logger.debug(f"jdata:{jdata}")
     users = Users(db, jdata)
-    try:
-        logger.debug(config["collection_name"])
-    except Exception as e:
-        logger.debug(e)
     users.insert("smc_connect_users")
     logger.info("--insert end--")
     
