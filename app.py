@@ -10,14 +10,14 @@ import yaml
 # Flaskアプリケーションのインスタンスを作成
 app = Flask(__name__)
 
-logger = logging.getLogger('weblog')
-logger.setLevel(logging.DEBUG)
+
 client = google.cloud.logging.Client()
 client.setup_logging()
+logger = logging.getLogger('weblog')
+logger.setLevel(logging.DEBUG)
 
 
 global db
-
 db = firestore.Client()
 
 
@@ -40,7 +40,7 @@ def execute():
     
     ## 受け取ったデータをFireStoreへ登録
     jdata = request.json['inArguments'][0]
-    logger.debug(f"jdata:{jdata}")
+    app.logger.debug(f"jdata:{jdata}")
     users = Users(db, jdata)
     users.insert("smc_connect_users")
 
@@ -50,22 +50,22 @@ def execute():
             
 @app.route("/publish",methods=["POST"])
 def publish():
-    logger.debug("--publish--")
+    logger.info("--publish--")
     return make_response('Success', 200)
 
 @app.route("/save",methods=["POST"])
 def save():
-    logger.debug("--save--")
+    logger.info("--save--")
     return render_template("index.html")
 
 @app.route("/validate",methods=["POST"])
 def validate():
-    logger.debug("--validate--")
+    logger.info("--validate--")
     return make_response('Success', 200)
 
 @app.route("/dotest",methods=["POST"])
 def dpost():
-    logger.debug("--receive--")
+    logger.info("--receive--")
     uid = request.json["uid"]
     
     print("---receive_data---:",uid)
