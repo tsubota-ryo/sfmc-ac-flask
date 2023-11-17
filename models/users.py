@@ -1,15 +1,15 @@
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
-import logging
-import google.cloud.logging
+# import logging
+# import google.cloud.logging
 
 class Users():
     
     def __init__(self, db, jdata):
-        self.logger = logging.getLogger('weblog').getChild("users")
-        client = google.cloud.logging.Client()
-        client.setup_logging()
+        # self.logger = logging.getLogger('weblog').getChild("users")
+        # client = google.cloud.logging.Client()
+        # client.setup_logging()
 
         self.db = db        
         self.data = {
