@@ -12,7 +12,7 @@ const connection = new Postmonger.Session();
 
 // we'll store the activity on this variable when we receive it
 let activity = null;
-const dataExtentionName = "DONE_user";
+const dataExtentionName = "DONE_USER";
 
 // Wait for the document to load before we doing anything
 document.addEventListener('DOMContentLoaded', function main() {
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function main() {
 });
 
 function onInitActivity(payload) {
-b
+
     // set the activity object from this payload. We'll refer to this object as we
     // modify it before saving.
     activity = payload;
