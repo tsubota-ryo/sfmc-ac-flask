@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<style>
+@page {
+    size: A4;
+    margin: 20mm 15mm 20mm 15mm;
+    @bottom-center {
+        content: counter(page);
+        font-size: 10px;
+        color: #666;
+    }
+}
+body {
+    font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic", "Meiryo", sans-serif;
+    font-size: 11pt;
+    line-height: 1.7;
+    color: #222;
+}
+h1 {
+    font-size: 22pt;
+    color: #1a3a5c;
+    border-bottom: 3px solid #1a3a5c;
+    padding-bottom: 8px;
+    margin-top: 0;
+}
+h2 {
+    font-size: 16pt;
+    color: #2a5a8c;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+    margin-top: 24px;
+}
+h3 {
+    font-size: 13pt;
+    color: #3a6a9c;
+    margin-top: 20px;
+}
+h4 {
+    font-size: 11pt;
+    color: #4a7aac;
+}
+table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 12px 0;
+    font-size: 10pt;
+}
+th, td {
+    border: 1px solid #ccc;
+    padding: 6px 10px;
+    text-align: left;
+}
+th {
+    background-color: #f0f4f8;
+    font-weight: bold;
+}
+tr:nth-child(even) {
+    background-color: #fafbfc;
+}
+code {
+    background-color: #f4f4f4;
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-family: "SF Mono", "Monaco", "Menlo", "Consolas", monospace;
+    font-size: 9.5pt;
+}
+pre {
+    background-color: #f6f8fa;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 12px 16px;
+    overflow-x: auto;
+    font-size: 9pt;
+    line-height: 1.5;
+}
+pre code {
+    background-color: transparent;
+    padding: 0;
+}
+blockquote {
+    border-left: 4px solid #dfe2e5;
+    padding: 8px 16px;
+    margin: 12px 0;
+    color: #555;
+    background-color: #fafafa;
+}
+a {
+    color: #0366d6;
+    text-decoration: none;
+}
+hr {
+    border: none;
+    border-top: 1px solid #ddd;
+    margin: 20px 0;
+}
+/* 目次 */
+.toc {
+    margin-top: 40px;
+}
+.toc h2 {
+    font-size: 20pt;
+    text-align: center;
+    border-bottom: none;
+}
+.toc ol {
+    font-size: 13pt;
+    line-height: 2.2;
+    max-width: 500px;
+    margin: 20px auto;
+}
+.toc a {
+    color: #1a3a5c;
+}
+/* タイトルページ */
+.cover {
+    text-align: center;
+    padding-top: 180px;
+}
+.cover h1 {
+    font-size: 28pt;
+    border-bottom: none;
+    color: #1a3a5c;
+}
+.cover p {
+    font-size: 13pt;
+    color: #666;
+    margin-top: 20px;
+}
+</style>
+</head>
+<body>
+    <div class="cover">
+        <h1>SFMC Custom Activity<br>Flask アプリケーション<br>技術ドキュメント</h1>
+        <p>Version 1.0</p>
+    </div>
+    <div style="page-break-after: always;"></div>
+    
+    <div class="toc">
+        <h2>目次</h2>
+        <ol><li><a href="#overview">1. プロジェクト概要</a></li>
+<li><a href="#api-reference">2. API リファレンス</a></li>
+<li><a href="#models">3. モデル定義</a></li>
+<li><a href="#frontend">4. フロントエンド仕様</a></li>
+<li><a href="#config-json-spec">5. config.json 仕様書</a></li>
+<li><a href="#setup-and-deployment">6. セットアップ・デプロイガイド</a></li>
+</ol>
+    </div>
+    <div style="page-break-after: always;"></div>
+    
+    <section id="overview"><h1 id="sfmc-custom-activity-flask">SFMC Custom Activity - Flask アプリケーション概要</h1>
+<h2 id="1">1. プロジェクト概要</h2>
+<p>本プロジェクトは、<strong>Salesforce Marketing Cloud (SFMC) Journey Builder</strong> 向けのカスタムアクティビティを提供するWebアプリケーションです。<br />
+Flask（Python）をバックエンドとして使用し、Journey Builder のジャーニーフロー内でユーザー情報を <strong>Google Cloud Firestore</strong> に登録する機能を実現しています。</p>
+<h3 id="_1">主な機能</h3>
+<ul>
+<li>Journey Builder カスタムアクティビティとしての動作（設定UI + REST APIエンドポイント）</li>
+<li>ジャーニー実行時にコンタクト情報を Firestore へ保存</li>
+<li>DialogOne との連携を目的としたデータ受け渡し</li>
+</ul>
+<h3 id="_2">技術スタック</h3>
+<table>
+<thead>
+<tr>
+<th>カテゴリ</th>
+<th>技術</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>バックエンド</td>
+<td>Python 3 / Flask 3.0.0</td>
+</tr>
+<tr>
+<td>WSGI サーバー</td>
+<td>Gunicorn 19.9.0</td>
+</tr>
+<tr>
+<td>データベース</td>
+<td>Google Cloud Firestore</td>
+</tr>
+<tr>
+<td>ロギング</td>
+<td>Google Cloud Logging</td>
+</tr>
+<tr>
+<td>フロントエンド</td>
+<td>HTML / JavaScript / Semantic UI</td>
+</tr>
+<tr>
+<td>JB連携ライブラリ</td>
+<td>Postmonger.js 0.0.14</td>
+</tr>
+<tr>
+<td>コンテナ</td>
+<td>Docker</td>
+</tr>
+<tr>
+<td>デプロイ先</td>
+<td>Google Cloud Run</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="2">2. ディレクトリ構成</h2>
+<pre class="codehilite"><code>sfmc-ac-flask/
+├── app.py                  # Flask メインアプリケーション
+├── config.json             # SFMC カスタムアクティビティ定義ファイル
+├── Dockerfile              # Docker コンテナビルド定義
+├── Procfile                # Heroku / Cloud Run 用プロセス定義
+├── requirements.txt        # Python 依存パッケージ一覧
+├── README.md               # プロジェクト概要（簡易）
+├── models/
+│   └── users.py            # Users モデル（Firestore データ操作）
+├── static/
+│   ├── css/
+│   │   ├── main.css        # カスタムスタイル
+│   │   ├── semantic.css    # Semantic UI（フル版）
+│   │   └── semantic.min.css # Semantic UI（圧縮版）
+│   ├── img/
+│   │   └── done.png        # アクティビティアイコン（推定）
+│   └── js/
+│       ├── index.js        # カスタムアクティビティ UI ロジック
+│       ├── postmonger.js   # JB 通信ライブラリ
+│       ├── semantic.js     # Semantic UI JS（フル版）
+│       └── semantic.min.js # Semantic UI JS（圧縮版）
+├── templates/
+│   └── index.html          # カスタムアクティビティ設定画面テンプレート
+└── docs/                   # ドキュメント（本ディレクトリ）
+</code></pre>
+
+<hr />
+<h2 id="3">3. アプリケーションの全体フロー</h2>
+<pre class="codehilite"><code>┌─────────────────────────────────────────────────────────┐
+│              SFMC Journey Builder                        │
+│                                                         │
+│   1. ジャーニーにカスタムアクティビティを配置            │
+│   2. 設定画面 (index.html) で content_id を入力          │
+│   3. ジャーニー実行時に /execute エンドポイントへPOST     │
+│                                                         │
+└──────────────────────┬──────────────────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────────────────┐
+│              Flask アプリケーション (app.py)             │
+│                                                         │
+│   /execute (POST)                                       │
+│     → inArguments からユーザーデータを取得               │
+│     → Users モデルで Firestore へ保存                    │
+│                                                         │
+│   /save, /publish, /validate (POST)                     │
+│     → JB ライフサイクルイベントの受信                    │
+│                                                         │
+└──────────────────────┬──────────────────────────────────┘
+                       │
+                       ▼
+┌─────────────────────────────────────────────────────────┐
+│              Google Cloud Firestore                      │
+│                                                         │
+│   コレクション: smc_connect_users                       │
+│   フィールド: contact_key, uid, acid, campaign_id,       │
+│              content_id, send_flg                        │
+└─────────────────────────────────────────────────────────┘
+</code></pre>
+
+<hr />
+<h2 id="4">4. 連携先サービス</h2>
+<h3 id="salesforce-marketing-cloud-sfmc">Salesforce Marketing Cloud (SFMC)</h3>
+<ul>
+<li>Journey Builder のカスタムアクティビティとして動作</li>
+<li><code>config.json</code> で定義されたエンドポイントURLを通じてJBと通信</li>
+</ul>
+<h3 id="google-cloud-firestore">Google Cloud Firestore</h3>
+<ul>
+<li>ジャーニー実行時のユーザーデータを永続化</li>
+<li>コレクション名: <code>smc_connect_users</code></li>
+</ul>
+<h3 id="google-cloud-logging">Google Cloud Logging</h3>
+<ul>
+<li>アプリケーションログをCloud Loggingへ送信</li>
+<li>ログレベル: DEBUG</li>
+</ul>
+<h3 id="dialogone">DialogOne</h3>
+<ul>
+<li><code>config.json</code> の <code>lang</code> 設定で "DialogOne" と記載</li>
+<li>SFMC のデータエクステンション <code>DONE_USERS</code> を参照してユーザー属性を取得</li>
+</ul></section>
+<div style="page-break-after: always;"></div>
+<section id="api-reference"><h1 id="api">API リファレンス</h1>
+<p>本ドキュメントでは、Flask アプリケーションが提供する全 REST API エンドポイントについて記載します。</p>
+<hr />
+<h2 id="_1">エンドポイント一覧</h2>
+<table>
+<thead>
+<tr>
+<th>メソッド</th>
+<th>パス</th>
+<th>用途</th>
+<th>カテゴリ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>GET</td>
+<td><code>/</code></td>
+<td>設定画面の表示</td>
+<td>UI</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/index.html</code></td>
+<td>設定画面の表示（別名）</td>
+<td>UI</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/config.json</code></td>
+<td>アクティビティ定義の取得</td>
+<td>JB連携</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/execute</code></td>
+<td>ジャーニー実行時の処理</td>
+<td>JB連携</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/publish</code></td>
+<td>ジャーニー公開時の処理</td>
+<td>JB連携</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/save</code></td>
+<td>アクティビティ保存時の処理</td>
+<td>JB連携</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/validate</code></td>
+<td>アクティビティ検証時の処理</td>
+<td>JB連携</td>
+</tr>
+<tr>
+<td>POST</td>
+<td><code>/dotest</code></td>
+<td>テスト用データ受信</td>
+<td>テスト</td>
+</tr>
+<tr>
+<td>GET</td>
+<td><code>/storetest</code></td>
+<td>Firestore テストデータ挿入</td>
+<td>テスト</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_2">エンドポイント詳細</h2>
+<h3 id="get-indexhtml">GET <code>/</code>・<code>/index.html</code></h3>
+<p><strong>概要</strong>: Journey Builder のカスタムアクティビティ設定画面を返します。</p>
+<p><strong>レスポンス</strong>: <code>templates/index.html</code> をレンダリングした HTML</p>
+<p><strong>説明</strong>:<br />
+Journey Builder でアクティビティを選択した際に表示される設定モーダル画面です。ユーザーは <code>content_id</code>（コンテンツID）を入力できます。</p>
+<hr />
+<h3 id="get-configjson">GET <code>/config.json</code></h3>
+<p><strong>概要</strong>: SFMC カスタムアクティビティの定義ファイルを返します。</p>
+<p><strong>レスポンス</strong>: JSON（<code>config.json</code> の内容）</p>
+<p><strong>レスポンス例</strong>:</p>
+<pre class="codehilite"><code class="language-json">{
+  &quot;workflowApiVersion&quot;: &quot;1.1&quot;,
+  &quot;metaData&quot;: {
+    &quot;icon&quot;: &quot;/static/img/done.png&quot;,
+    &quot;category&quot;: &quot;message&quot;
+  },
+  &quot;type&quot;: &quot;REST&quot;,
+  &quot;lang&quot;: {
+    &quot;en-US&quot;: {
+      &quot;name&quot;: &quot;DialogOne&quot;,
+      &quot;description&quot;: &quot;Connet to DialogOne&quot;
+    }
+  },
+  &quot;arguments&quot;: {
+    &quot;execute&quot;: {
+      &quot;inArguments&quot;: [],
+      &quot;outArguments&quot;: [],
+      &quot;timeout&quot;: 20000,
+      &quot;retryCount&quot;: 1,
+      &quot;retryDelay&quot;: 10000,
+      &quot;concurrentRequests&quot;: 1,
+      &quot;url&quot;: &quot;https://sfmc-done-test-akb3xrrmgq-uc.a.run.app/execute&quot;
+    }
+  },
+  &quot;configurationArguments&quot;: {
+    &quot;save&quot;: { &quot;url&quot;: &quot;...&quot; },
+    &quot;publish&quot;: { &quot;url&quot;: &quot;...&quot; },
+    &quot;validate&quot;: { &quot;url&quot;: &quot;...&quot; },
+    &quot;stop&quot;: { &quot;url&quot;: &quot;...&quot; }
+  },
+  &quot;userInterfaces&quot;: {
+    &quot;configModal&quot;: {
+      &quot;height&quot;: 200,
+      &quot;width&quot;: 300,
+      &quot;fullscreen&quot;: true
+    }
+  }
+}
+</code></pre>
+
+<p><strong>主要フィールド説明</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>workflowApiVersion</code></td>
+<td>JB Workflow API のバージョン（1.1）</td>
+</tr>
+<tr>
+<td><code>metaData.icon</code></td>
+<td>アクティビティのアイコン画像パス</td>
+</tr>
+<tr>
+<td><code>metaData.category</code></td>
+<td>アクティビティのカテゴリ（<code>message</code>）</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>アクティビティタイプ（<code>REST</code>）</td>
+</tr>
+<tr>
+<td><code>arguments.execute</code></td>
+<td>ジャーニー実行時の設定（URL、タイムアウト、リトライ等）</td>
+</tr>
+<tr>
+<td><code>configurationArguments</code></td>
+<td>各ライフサイクルイベント（save/publish/validate/stop）のURL</td>
+</tr>
+<tr>
+<td><code>userInterfaces.configModal</code></td>
+<td>設定モーダルのサイズ設定</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h3 id="post-execute">POST <code>/execute</code></h3>
+<p><strong>概要</strong>: ジャーニー実行時に呼び出され、ユーザーデータを Firestore に保存します。</p>
+<p><strong>リクエストボディ</strong>:</p>
+<pre class="codehilite"><code class="language-json">{
+  &quot;inArguments&quot;: [
+    {
+      &quot;contact_key&quot;: &quot;user@example.com&quot;,
+      &quot;uid&quot;: &quot;12345&quot;,
+      &quot;acid&quot;: &quot;50dbb3948b683b5a&quot;,
+      &quot;campaign_id&quot;: &quot;campaign_001&quot;,
+      &quot;content_id&quot;: &quot;39812&quot;
+    }
+  ]
+}
+</code></pre>
+
+<p><strong>inArguments フィールド</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>contact_key</code></td>
+<td>string</td>
+<td>SFMC コンタクトキー（<code>{{Contact.Key}}</code>）</td>
+</tr>
+<tr>
+<td><code>uid</code></td>
+<td>string</td>
+<td>ユーザーID（データエクステンション <code>DONE_USERS</code> の <code>UID</code>）</td>
+</tr>
+<tr>
+<td><code>acid</code></td>
+<td>string</td>
+<td>ACID（データエクステンション <code>DONE_USERS</code> の <code>ACID</code>）</td>
+</tr>
+<tr>
+<td><code>campaign_id</code></td>
+<td>string</td>
+<td>キャンペーンID（データエクステンション <code>DONE_USERS</code> の <code>campaign_id</code>）</td>
+</tr>
+<tr>
+<td><code>content_id</code></td>
+<td>string</td>
+<td>コンテンツID（設定画面で入力された値）</td>
+</tr>
+</tbody>
+</table>
+<p><strong>レスポンス</strong>: <code>200 OK</code>（<code>Success</code>）</p>
+<p><strong>処理内容</strong>:<br />
+1. リクエストボディから <code>inArguments[0]</code> を取得<br />
+2. <code>Users</code> モデルを生成し、Firestore コレクション <code>smc_connect_users</code> にドキュメントを追加<br />
+3. 保存されるデータには <code>send_flg: false</code> が自動付与される</p>
+<hr />
+<h3 id="post-publish">POST <code>/publish</code></h3>
+<p><strong>概要</strong>: ジャーニーが公開（アクティベート）された際に呼び出されます。</p>
+<p><strong>レスポンス</strong>: <code>200 OK</code>（<code>Success</code>）</p>
+<p><strong>処理内容</strong>: ログ出力のみ。追加の処理は実装されていません。</p>
+<hr />
+<h3 id="post-save">POST <code>/save</code></h3>
+<p><strong>概要</strong>: アクティビティの設定が保存された際に呼び出されます。</p>
+<p><strong>レスポンス</strong>: <code>index.html</code> テンプレートのレンダリング結果</p>
+<p><strong>処理内容</strong>: ログ出力のみ。</p>
+<hr />
+<h3 id="post-validate">POST <code>/validate</code></h3>
+<p><strong>概要</strong>: ジャーニー公開前のバリデーション時に呼び出されます。</p>
+<p><strong>レスポンス</strong>: <code>200 OK</code>（<code>Success</code>）</p>
+<p><strong>処理内容</strong>: ログ出力のみ。常に成功を返します。</p>
+<hr />
+<h3 id="post-dotest">POST <code>/dotest</code></h3>
+<p><strong>概要</strong>: テスト用エンドポイント。JSON ボディから <code>uid</code> を受け取り、コンソールに出力します。</p>
+<p><strong>リクエストボディ</strong>:</p>
+<pre class="codehilite"><code class="language-json">{
+  &quot;uid&quot;: &quot;12345&quot;
+}
+</code></pre>
+
+<p><strong>レスポンス</strong>: <code>200 OK</code>（<code>Success</code>）</p>
+<hr />
+<h3 id="get-storetest">GET <code>/storetest</code></h3>
+<p><strong>概要</strong>: Firestore へテストデータを挿入するためのエンドポイントです。</p>
+<p><strong>レスポンス</strong>: <code>200 OK</code>（<code>Success</code>）</p>
+<p><strong>処理内容</strong>: <code>test_collection</code> コレクションに以下の固定データを挿入します。</p>
+<pre class="codehilite"><code class="language-json">{
+  &quot;contact_key&quot;: &quot;ryo-tsubota@dac.co.jp&quot;,
+  &quot;uid&quot;: &quot;1212&quot;,
+  &quot;acid&quot;: &quot;50dbb3948b683b5a&quot;,
+  &quot;content_id&quot;: &quot;39812&quot;,
+  &quot;send_flg&quot;: false
+}
+</code></pre>
+
+<blockquote>
+<p><strong>注意</strong>: このエンドポイントは開発・テスト目的のものであり、本番環境では無効化することを推奨します。</p>
+</blockquote></section>
+<div style="page-break-after: always;"></div>
+<section id="models"><h1 id="_1">モデル定義</h1>
+<h2 id="users">Users モデル</h2>
+<p><strong>ファイル</strong>: <code>models/users.py</code></p>
+<h3 id="_2">概要</h3>
+<p>Firestore へのユーザーデータ登録を担当するモデルクラスです。<br />
+SFMC Journey Builder の <code>/execute</code> エンドポイントから呼び出され、ジャーニー実行時のコンタクト情報を永続化します。</p>
+<h3 id="_3">クラス定義</h3>
+<pre class="codehilite"><code class="language-python">class Users:
+    def __init__(self, db, jdata)
+    def insert(self, collection_name)
+</code></pre>
+
+<h3 id="_4">コンストラクタ</h3>
+<pre class="codehilite"><code class="language-python">def __init__(self, db, jdata)
+</code></pre>
+
+<table>
+<thead>
+<tr>
+<th>引数</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>db</code></td>
+<td><code>firestore.Client</code></td>
+<td>Firestore クライアントインスタンス</td>
+</tr>
+<tr>
+<td><code>jdata</code></td>
+<td><code>dict</code></td>
+<td>SFMC から受信した inArguments データ</td>
+</tr>
+</tbody>
+</table>
+<p>コンストラクタでは、受信データから以下のフィールドを抽出して <code>self.data</code> に格納します：</p>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>説明</th>
+<th>ソース</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>contact_key</code></td>
+<td>SFMC コンタクトキー</td>
+<td><code>jdata['contact_key']</code></td>
+</tr>
+<tr>
+<td><code>uid</code></td>
+<td>ユーザーID</td>
+<td><code>jdata['uid']</code></td>
+</tr>
+<tr>
+<td><code>acid</code></td>
+<td>ACID</td>
+<td><code>jdata['acid']</code></td>
+</tr>
+<tr>
+<td><code>campaign_id</code></td>
+<td>キャンペーンID</td>
+<td><code>jdata['campaign_id']</code></td>
+</tr>
+<tr>
+<td><code>content_id</code></td>
+<td>コンテンツID</td>
+<td><code>jdata['content_id']</code></td>
+</tr>
+<tr>
+<td><code>send_flg</code></td>
+<td>送信フラグ（初期値: <code>False</code>）</td>
+<td>固定値</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_5">メソッド</h3>
+<h4 id="insertcollection_name"><code>insert(collection_name)</code></h4>
+<p>Firestore の指定コレクションにドキュメントを追加します。</p>
+<table>
+<thead>
+<tr>
+<th>引数</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>collection_name</code></td>
+<td><code>str</code></td>
+<td>保存先の Firestore コレクション名</td>
+</tr>
+</tbody>
+</table>
+<p><strong>使用例</strong>（<code>app.py</code> 内）:</p>
+<pre class="codehilite"><code class="language-python">users = Users(db, jdata)
+users.insert(&quot;smc_connect_users&quot;)
+</code></pre>
+
+<p><strong>例外処理</strong>: Firestore への書き込みに失敗した場合、エラーをログ出力した後に例外を再送出します。</p>
+<h3 id="firestore">Firestore データ構造</h3>
+<p><strong>コレクション名</strong>: <code>smc_connect_users</code></p>
+<table>
+<thead>
+<tr>
+<th>フィールド</th>
+<th>型</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>contact_key</code></td>
+<td>string</td>
+<td>SFMC コンタクトキー（メールアドレス等）</td>
+</tr>
+<tr>
+<td><code>uid</code></td>
+<td>string</td>
+<td>ユーザーID</td>
+</tr>
+<tr>
+<td><code>acid</code></td>
+<td>string</td>
+<td>ACID</td>
+</tr>
+<tr>
+<td><code>campaign_id</code></td>
+<td>string</td>
+<td>キャンペーンID</td>
+</tr>
+<tr>
+<td><code>content_id</code></td>
+<td>string</td>
+<td>コンテンツID</td>
+</tr>
+<tr>
+<td><code>send_flg</code></td>
+<td>boolean</td>
+<td>送信済みフラグ（初期値: <code>false</code>）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>備考</strong>: <code>send_flg</code> は初期値 <code>false</code> で挿入され、後続の処理（外部システム等）で <code>true</code> に更新される設計と推定されます。</p>
+</blockquote>
+<h3 id="_6">未実装機能</h3>
+<ul>
+<li>バリデーションチェック（<code>validation_data</code> メソッド）がコメントアウトされており、未実装の状態です。</li>
+</ul></section>
+<div style="page-break-after: always;"></div>
+<section id="frontend"><h1 id="_1">フロントエンド仕様</h1>
+<h2 id="_2">概要</h2>
+<p>カスタムアクティビティの設定画面（UI）は、Journey Builder の iframe 内で表示されます。<br />
+Postmonger.js を使用して Journey Builder 本体と通信し、アクティビティの設定情報をやり取りします。</p>
+<hr />
+<h2 id="indexhtml">設定画面（index.html）</h2>
+<h3 id="_3">画面構成</h3>
+<table>
+<thead>
+<tr>
+<th>要素</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Content_id 入力フィールド</td>
+<td>コンテンツIDをユーザーが入力するテキストフィールド</td>
+</tr>
+<tr>
+<td>Save ボタン</td>
+<td>設定を保存し、Journey Builder に反映する</td>
+</tr>
+<tr>
+<td>Cancel ボタン</td>
+<td>変更を破棄して設定画面を閉じる</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_4">使用ライブラリ</h3>
+<table>
+<thead>
+<tr>
+<th>ライブラリ</th>
+<th>バージョン</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>jQuery</td>
+<td>3.7.1 (slim)</td>
+<td>DOM操作</td>
+</tr>
+<tr>
+<td>Semantic UI</td>
+<td>-</td>
+<td>UIフレームワーク（フォーム、ボタン等）</td>
+</tr>
+<tr>
+<td>Postmonger.js</td>
+<td>0.0.14</td>
+<td>Journey Builder との通信</td>
+</tr>
+</tbody>
+</table>
+<h3 id="maincss">スタイル（main.css）</h3>
+<table>
+<thead>
+<tr>
+<th>クラス</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.container</code></td>
+<td>最大幅960px、中央揃えのメインコンテナ</td>
+</tr>
+<tr>
+<td><code>.btn_group</code></td>
+<td>ボタングループ（上マージン30px）</td>
+</tr>
+<tr>
+<td><code>.topmargin</code></td>
+<td>上マージン30px</td>
+</tr>
+<tr>
+<td><code>.center</code></td>
+<td>テキスト中央揃え</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="javascript-indexjs">JavaScript ロジック（index.js）</h2>
+<h3 id="_5">定数</h3>
+<table>
+<thead>
+<tr>
+<th>変数</th>
+<th>値</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>connection</code></td>
+<td><code>Postmonger.Session</code></td>
+<td>JB との通信セッション</td>
+</tr>
+<tr>
+<td><code>activity</code></td>
+<td><code>null</code>（初期値）</td>
+<td>アクティビティオブジェクト</td>
+</tr>
+<tr>
+<td><code>dataExtentionName</code></td>
+<td><code>"DONE_USERS"</code></td>
+<td>参照するデータエクステンション名</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_6">イベントフロー</h3>
+<pre class="codehilite"><code>DOMContentLoaded
+    │
+    ├── setupEventHandlers()   // ボタンイベントの設定
+    ├── connection.on('initActivity', onInitActivity)   // 初期化イベントのバインド
+    └── connection.trigger('ready')   // JB に準備完了を通知
+          │
+          ▼
+    onInitActivity(payload)
+          │  ← JB からアクティビティオブジェクトを受信
+          └── activity 変数にペイロードを保存
+</code></pre>
+
+<h3 id="_7">関数詳細</h3>
+<h4 id="oninitactivitypayload"><code>onInitActivity(payload)</code></h4>
+<p>Journey Builder から受信したアクティビティ情報を処理します。</p>
+<ul>
+<li><code>activity</code> 変数にペイロードを格納</li>
+<li><code>inArguments</code> の有無を確認</li>
+<li>デバッグ用にコンソールへ情報を出力</li>
+</ul>
+<h4 id="ondonebuttonclick"><code>onDoneButtonClick()</code></h4>
+<p>Save ボタンクリック時の処理です。</p>
+<p><strong>処理フロー</strong>:<br />
+1. <code>activity.metaData.isConfigured = true</code> を設定（アクティビティが設定済みであることをJBに通知）<br />
+2. 入力された <code>content_id</code> を取得<br />
+3. <code>inArguments</code> を構築:</p>
+<pre class="codehilite"><code class="language-javascript">activity.arguments.execute.inArguments = [{
+    content_id: content_id,                              // 画面入力値
+    contact_key: &quot;{{Contact.Key}}&quot;,                      // SFMC コンタクトキー
+    uid: &quot;{{Contact.Attribute.DONE_USERS.UID}}&quot;,         // データエクステンション参照
+    acid: &quot;{{Contact.Attribute.DONE_USERS.ACID}}&quot;,       // データエクステンション参照
+    name: &quot;{{Contact.Attribute.DONE_USERS.name}}&quot;,       // データエクステンション参照
+    campaign_id: &quot;{{Contact.Attribute.DONE_USERS.campaign_id}}&quot; // データエクステンション参照
+}];
+</code></pre>
+
+<ol>
+<li>アクティビティ名を <code>content_id</code> の値に設定</li>
+<li><code>connection.trigger('updateActivity', activity)</code> で JB にアクティビティ更新を通知</li>
+</ol>
+<h4 id="oncancelbuttonclick"><code>onCancelButtonClick()</code></h4>
+<p>Cancel ボタンクリック時の処理です。</p>
+<ol>
+<li><code>setActivityDirtyState</code> を <code>false</code> に設定（変更なし扱い）</li>
+<li><code>requestInspectorClose</code> でインスペクター（設定画面）を閉じる</li>
+</ol>
+<h3 id="sfmc">SFMC データエクステンション参照</h3>
+<p>フロントエンドでは、SFMC のパーソナライゼーション文字列を使用してデータエクステンション <code>DONE_USERS</code> から以下の属性を参照しています：</p>
+<table>
+<thead>
+<tr>
+<th>パーソナライゼーション文字列</th>
+<th>参照先</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>{{Contact.Key}}</code></td>
+<td>コンタクトキー</td>
+</tr>
+<tr>
+<td><code>{{Contact.Attribute.DONE_USERS.UID}}</code></td>
+<td>ユーザーID</td>
+</tr>
+<tr>
+<td><code>{{Contact.Attribute.DONE_USERS.ACID}}</code></td>
+<td>ACID</td>
+</tr>
+<tr>
+<td><code>{{Contact.Attribute.DONE_USERS.name}}</code></td>
+<td>名前</td>
+</tr>
+<tr>
+<td><code>{{Contact.Attribute.DONE_USERS.campaign_id}}</code></td>
+<td>キャンペーンID</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意</strong>: <code>dataExtentionName</code> 変数（<code>"DONE_USERS"</code>）を変更することで、参照先のデータエクステンションを切り替えられます。コード内に <code>TODO: データエクステンション名に応じ変更する</code> のコメントがあります。</p>
+</blockquote></section>
+<div style="page-break-after: always;"></div>
+<section id="config-json-spec"><h1 id="configjson">config.json 仕様書</h1>
+<h2 id="_1">概要</h2>
+<p><code>config.json</code> は、SFMC Journey Builder がカスタムアクティビティを認識・制御するための<strong>アクティビティ定義ファイル</strong>です。<br />
+Journey Builder はこのファイルを読み込み、アクティビティの表示名、アイコン、各ライフサイクルイベントのエンドポイントURL等を取得します。</p>
+<hr />
+<h2 id="_2">構造</h2>
+<h3 id="_3">トップレベルプロパティ</h3>
+<table>
+<thead>
+<tr>
+<th>プロパティ</th>
+<th>値</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>workflowApiVersion</code></td>
+<td><code>"1.1"</code></td>
+<td>Journey Builder Workflow API のバージョン</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td><code>"REST"</code></td>
+<td>アクティビティタイプ（REST API ベース）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="metadata">metaData</h3>
+<p>アクティビティのメタ情報を定義します。</p>
+<table>
+<thead>
+<tr>
+<th>プロパティ</th>
+<th>値</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>icon</code></td>
+<td><code>"/static/img/done.png"</code></td>
+<td>JB キャンバス上に表示されるアイコン画像のパス</td>
+</tr>
+<tr>
+<td><code>category</code></td>
+<td><code>"message"</code></td>
+<td>アクティビティのカテゴリ（JB のパレットでの表示位置）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="lang">lang</h3>
+<p>アクティビティの多言語表示設定です。</p>
+<table>
+<thead>
+<tr>
+<th>ロケール</th>
+<th>name</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>en-US</code></td>
+<td>DialogOne</td>
+<td>Connet to DialogOne</td>
+</tr>
+</tbody>
+</table>
+<h3 id="argumentsexecute">arguments.execute</h3>
+<p>ジャーニー実行時の設定です。</p>
+<table>
+<thead>
+<tr>
+<th>プロパティ</th>
+<th>値</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>inArguments</code></td>
+<td><code>[]</code></td>
+<td>実行時に渡される引数（フロントエンドで動的に設定）</td>
+</tr>
+<tr>
+<td><code>outArguments</code></td>
+<td><code>[]</code></td>
+<td>実行後に返される引数（未使用）</td>
+</tr>
+<tr>
+<td><code>timeout</code></td>
+<td><code>20000</code></td>
+<td>タイムアウト（ミリ秒）：20秒</td>
+</tr>
+<tr>
+<td><code>retryCount</code></td>
+<td><code>1</code></td>
+<td>リトライ回数</td>
+</tr>
+<tr>
+<td><code>retryDelay</code></td>
+<td><code>10000</code></td>
+<td>リトライ間隔（ミリ秒）：10秒</td>
+</tr>
+<tr>
+<td><code>concurrentRequests</code></td>
+<td><code>1</code></td>
+<td>同時リクエスト数</td>
+</tr>
+<tr>
+<td><code>url</code></td>
+<td><code>"https://sfmc-done-test-akb3xrrmgq-uc.a.run.app/execute"</code></td>
+<td>実行エンドポイントURL</td>
+</tr>
+</tbody>
+</table>
+<h3 id="configurationarguments">configurationArguments</h3>
+<p>各ライフサイクルイベントのエンドポイントURLです。</p>
+<table>
+<thead>
+<tr>
+<th>イベント</th>
+<th>パス</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>save</code></td>
+<td><code>/save</code></td>
+<td>アクティビティ設定の保存時</td>
+</tr>
+<tr>
+<td><code>publish</code></td>
+<td><code>/publish</code></td>
+<td>ジャーニーのアクティベート時</td>
+</tr>
+<tr>
+<td><code>validate</code></td>
+<td><code>/validate</code></td>
+<td>ジャーニー公開前のバリデーション時</td>
+</tr>
+<tr>
+<td><code>stop</code></td>
+<td><code>/stop</code></td>
+<td>ジャーニー停止時（※エンドポイント未実装）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>注意</strong>: <code>/stop</code> エンドポイントは <code>config.json</code> で定義されていますが、<code>app.py</code> には対応するルートが実装されていません。</p>
+</blockquote>
+<h3 id="userinterfacesconfigmodal">userInterfaces.configModal</h3>
+<p>アクティビティ設定画面のモーダル設定です。</p>
+<table>
+<thead>
+<tr>
+<th>プロパティ</th>
+<th>値</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>height</code></td>
+<td><code>200</code></td>
+<td>モーダルの高さ（px）</td>
+</tr>
+<tr>
+<td><code>width</code></td>
+<td><code>300</code></td>
+<td>モーダルの幅（px）</td>
+</tr>
+<tr>
+<td><code>fullscreen</code></td>
+<td><code>true</code></td>
+<td>フルスクリーン表示（<code>true</code> の場合、width/height は無視される）</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="journey-builder">Journey Builder ライフサイクル</h2>
+<pre class="codehilite"><code>アクティビティ配置
+    │
+    ▼
+設定画面表示 (/index.html)
+    │
+    ▼ ユーザーが設定を保存
+/save (POST)
+    │
+    ▼ ジャーニーを公開
+/validate (POST) → /publish (POST)
+    │
+    ▼ ジャーニー実行（各コンタクトに対して）
+/execute (POST)
+    │
+    ▼ ジャーニー停止
+/stop (POST)  ※未実装
+</code></pre></section>
+<div style="page-break-after: always;"></div>
+<section id="setup-and-deployment"><h1 id="_1">セットアップ・デプロイガイド</h1>
+<h2 id="_2">前提条件</h2>
+<ul>
+<li>Python 3.x</li>
+<li>Google Cloud プロジェクト（Firestore、Cloud Logging が有効化済み）</li>
+<li>Google Cloud SDK（ローカル開発時）</li>
+<li>Docker（コンテナビルド時）</li>
+<li>SFMC 管理者権限（カスタムアクティビティの登録）</li>
+</ul>
+<hr />
+<h2 id="_3">依存パッケージ</h2>
+<p><code>requirements.txt</code> に定義されたパッケージ一覧：</p>
+<table>
+<thead>
+<tr>
+<th>パッケージ</th>
+<th>バージョン</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>flask</td>
+<td>3.0.0</td>
+<td>Web フレームワーク</td>
+</tr>
+<tr>
+<td>gunicorn</td>
+<td>19.9.0</td>
+<td>WSGI HTTP サーバー</td>
+</tr>
+<tr>
+<td>requests</td>
+<td>2.31.0</td>
+<td>HTTP クライアント</td>
+</tr>
+<tr>
+<td>firebase-admin</td>
+<td>6.2.0</td>
+<td>Firebase Admin SDK</td>
+</tr>
+<tr>
+<td>google-cloud-firestore</td>
+<td>2.13.0</td>
+<td>Firestore クライアント</td>
+</tr>
+<tr>
+<td>google-cloud-logging</td>
+<td>3.8.0</td>
+<td>Cloud Logging クライアント</td>
+</tr>
+<tr>
+<td>PyYAML</td>
+<td>6.0.1</td>
+<td>YAML パーサー</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_4">ローカル開発</h2>
+<h3 id="1">1. 環境構築</h3>
+<pre class="codehilite"><code class="language-bash"># 仮想環境の作成・有効化
+python3 -m venv venv
+source venv/bin/activate
+
+# 依存パッケージのインストール
+pip install -r requirements.txt
+</code></pre>
+
+<h3 id="2-google-cloud">2. Google Cloud 認証</h3>
+<pre class="codehilite"><code class="language-bash"># サービスアカウントキーを使用する場合
+export GOOGLE_APPLICATION_CREDENTIALS=&quot;path/to/service-account-key.json&quot;
+
+# gcloud CLI でログインする場合
+gcloud auth application-default login
+</code></pre>
+
+<h3 id="3">3. アプリケーション起動</h3>
+<pre class="codehilite"><code class="language-bash">python app.py
+</code></pre>
+
+<p>アプリケーションは <code>http://0.0.0.0:8080</code> で起動します。</p>
+<hr />
+<h2 id="docker">Docker ビルド・実行</h2>
+<h3 id="dockerfile">Dockerfile の構成</h3>
+<pre class="codehilite"><code class="language-dockerfile">FROM python:3          # Python 3 ベースイメージ
+USER root              # root ユーザーで実行
+
+EXPOSE 8080:8080       # ポート 8080 を公開
+
+# システム・pip の更新
+RUN apt-get update
+RUN pip install --upgrade pip
+RUN pip install --upgrade setuptools
+
+# 依存パッケージのインストール
+COPY &quot;./requirements.txt&quot; /tmp
+RUN pip install -r /tmp/requirements.txt
+
+# アプリケーションコードのコピー
+COPY ./. /app/
+WORKDIR &quot;/app&quot;
+CMD [&quot;python&quot;,&quot;app.py&quot;]
+</code></pre>
+
+<h3 id="_5">ビルドと実行</h3>
+<pre class="codehilite"><code class="language-bash"># イメージのビルド
+docker build -t sfmc-ac-flask .
+
+# コンテナの実行
+docker run -p 8080:8080 sfmc-ac-flask
+</code></pre>
+
+<hr />
+<h2 id="google-cloud-run">Google Cloud Run へのデプロイ</h2>
+<h3 id="1-container-registry-artifact-registry">1. Container Registry / Artifact Registry へのプッシュ</h3>
+<pre class="codehilite"><code class="language-bash"># プロジェクトIDを設定
+export PROJECT_ID=your-gcp-project-id
+
+# イメージのビルドとプッシュ
+gcloud builds submit --tag gcr.io/$PROJECT_ID/sfmc-ac-flask
+
+# または Artifact Registry を使用
+gcloud builds submit --tag us-central1-docker.pkg.dev/$PROJECT_ID/repo-name/sfmc-ac-flask
+</code></pre>
+
+<h3 id="2-cloud-run">2. Cloud Run へのデプロイ</h3>
+<pre class="codehilite"><code class="language-bash">gcloud run deploy sfmc-ac-flask \
+  --image gcr.io/$PROJECT_ID/sfmc-ac-flask \
+  --platform managed \
+  --region us-central1 \
+  --allow-unauthenticated \
+  --port 8080
+</code></pre>
+
+<h3 id="3_1">3. デプロイ後の設定</h3>
+<p>デプロイ後に取得した Cloud Run の URL を <code>config.json</code> の各エンドポイントURLに反映してください。</p>
+<p>現在の設定値:</p>
+<pre class="codehilite"><code>https://sfmc-done-test-akb3xrrmgq-uc.a.run.app
+</code></pre>
+
+<p>変更が必要な箇所（<code>config.json</code>）:<br />
+- <code>arguments.execute.url</code><br />
+- <code>configurationArguments.save.url</code><br />
+- <code>configurationArguments.publish.url</code><br />
+- <code>configurationArguments.validate.url</code><br />
+- <code>configurationArguments.stop.url</code></p>
+<hr />
+<h2 id="heroku-procfile">Heroku デプロイ（Procfile）</h2>
+<p><code>Procfile</code> が定義されているため、Heroku へのデプロイも可能です。</p>
+<pre class="codehilite"><code>web: gunicorn app:app --log-file ./log.txt
+</code></pre>
+
+<pre class="codehilite"><code class="language-bash">heroku create sfmc-ac-flask
+git push heroku main
+</code></pre>
+
+<hr />
+<h2 id="sfmc">SFMC への登録</h2>
+<p>カスタムアクティビティを SFMC に登録するには、以下の手順が必要です：</p>
+<ol>
+<li>SFMC の <strong>Package Manager</strong> でアプリケーションパッケージを作成</li>
+<li><strong>Journey Builder Activity</strong> コンポーネントを追加</li>
+<li>エンドポイント URL にデプロイ先の URL を設定</li>
+<li><code>config.json</code> のURLが正しくデプロイ先を指していることを確認</li>
+</ol>
+<hr />
+<h2 id="_6">環境変数</h2>
+<p>現在のアプリケーションでは明示的な環境変数は使用されていませんが、以下の暗黙の設定が必要です：</p>
+<table>
+<thead>
+<tr>
+<th>設定</th>
+<th>説明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Google Cloud 認証情報</td>
+<td>Firestore・Cloud Logging アクセスに必要。Cloud Run では自動的にサービスアカウントが適用される</td>
+</tr>
+<tr>
+<td>Firestore データベース</td>
+<td>デフォルトの Firestore データベースを使用</td>
+</tr>
+</tbody>
+</table></section>
+<div style="page-break-after: always;"></div>
+
+</body>
+</html>
